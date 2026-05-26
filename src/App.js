@@ -1,7 +1,11 @@
+import React from 'react';
+import './App.css';
+import TopBar from './components/TopBar/TopBar';
+
 function App() {
   return (
     <div>
-      <h1>UIPA Caserta</h1>
+      <TopBar />
     </div>
   );
 }

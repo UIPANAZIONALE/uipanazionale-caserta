@@ -1,38 +1,44 @@
-.App {
-  text-align: center;
+/* =============================================
+   UIPA Caserta – Variabili e stili globali
+   ============================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+:root {
+  --verde:        #2e6b35;
+  --verde-scuro:  #1e4a23;
+  --verde-chiaro: #4a9c54;
+  --bianco:       #ffffff;
+  --grigio:       #f4f4f4;
+  --grigio-medio: #e0e0e0;
+  --testo:        #333333;
+  --testo-chiaro: #666666;
+  --font:         'Open Sans', Arial, sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  font-family: var(--font);
+  color: var(--testo);
+  font-size: 15px;
+  line-height: 1.6;
+  background: var(--bianco);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+a {
+  color: var(--verde);
+  text-decoration: none;
 }
 
-.App-link {
-  color: #61dafb;
+a:hover {
+  color: var(--verde-chiaro);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
