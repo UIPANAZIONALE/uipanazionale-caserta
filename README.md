@@ -1,70 +1,130 @@
-# Getting Started with Create React App
+# UIPA Caserta — Sito Web
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Refactoring del sito ufficiale UIPA sede di Caserta.
+Sito vetrina multi-pagina con area riservata, form contatti e gestione news.
 
-## Available Scripts
+## Stack
 
-In the project directory, you can run:
+- **Frontend**: React 18 (Create React App) — porta 3000
+- **Routing**: React Router DOM v6
+- **Stili**: CSS per componente (nessuna libreria UI esterna)
+- **Auth**: JWT + httpOnly cookie (area riservata)
+- **Form**: validazione frontend + reCAPTCHA v3 (anti-spam)
 
-### `npm start`
+## Design
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Font**: Open Sans (400/600/700/800) via Google Fonts
+- **Palette brand**: `#2e6b35` (verde primario) · `#1e4a23` (verde scuro/hover)
+- **UI**: CSS custom con variabili globali in `App.css`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Prerequisiti
 
-### `npm test`
+- Node.js 16+
+- npm 8+
+- Git
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Setup rapido
 
-### `npm run build`
+```bash
+# 1. Clona il repository
+git clone https://github.com/UIPANAZIONALE/uipanazionale-caserta.git
+cd uipanazionale-caserta
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# 2. Checkout branch di sviluppo
+git checkout develop
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# 3. Installa dipendenze
+npm install
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# 4. Copia variabili d'ambiente
+cp .env.example .env.local
 
-### `npm run eject`
+# 5. Avvia in sviluppo
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Il sito sarà disponibile su **http://localhost:3000**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Variabili d'ambiente
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Creare `.env.local` partendo da `.env.example`.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+| Variabile                 | Descrizione                         | Obbligatoria |
+| ------------------------- | ----------------------------------- | :----------: |
+| `REACT_APP_API_URL`       | URL del backend API                 |      Sì      |
+| `REACT_APP_RECAPTCHA_KEY` | Chiave pubblica Google reCAPTCHA v3 |      Sì      |
+| `REACT_APP_MAPS_KEY`      | Chiave Google Maps (mappa contatti) |      No      |
 
-## Learn More
+> ⚠️ Non committare mai `.env.local` su GitHub — è già in `.gitignore`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Endpoint utili (sviluppo)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+| Servizio       | URL                                  |
+| -------------- | ------------------------------------ |
+| Sito pubblico  | http://localhost:3000                |
+| Area riservata | http://localhost:3000/area-riservata |
+| Login          | http://localhost:3000/login          |
+| Contatti       | http://localhost:3000/contatti       |
 
-### Code Splitting
+## Script disponibili
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+npm start          # Avvia il server di sviluppo
+npm run build      # Build produzione (cartella /build)
+npm test           # Avvia i test
+npm run lint       # Controlla errori ESLint
+npm audit          # Controlla vulnerabilità dipendenze
+npm audit fix      # Risolve vulnerabilità automaticamente
+```
 
-### Analyzing the Bundle Size
+## Struttura del progetto
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```
+uipa-caserta/
+├── public/
+│   └── index.html
+└── src/
+    ├── assets/              ← loghi, immagini, video hero
+    ├── components/
+    │   ├── TopBar/          ← barra superiore (Gestionale, Webmail, Facebook)
+    │   ├── Navbar/          ← navigazione con dropdown + hamburger mobile
+    │   └── Footer/          ← footer 4 colonne
+    └── pages/
+        ├── Home/            ← homepage con video hero
+        ├── ChiSiamo/        ← presentazione + organi sociali
+        ├── Servizi/         ← griglia servizi
+        ├── Contatti/        ← form contatti + mappa
+        ├── Login/           ← area riservata
+        └── NotFound/        ← pagina 404
+```
 
-### Making a Progressive Web App
+## Branch
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```
+main          ← versione stabile e definitiva (non si tocca direttamente)
+  └── develop ← sviluppo attivo
+        ├── feature/navbar
+        ├── feature/homepage
+        └── feature/contatti
+```
 
-### Advanced Configuration
+## GDPR e Privacy
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Il sito raccoglie dati personali tramite il form contatti.
+Sono obbligatori per legge (GDPR 679/2016):
 
-### Deployment
+- Pagina `/privacy` con Privacy Policy
+- Cookie Policy
+- Banner consenso cookie al primo accesso
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Sito di riferimento
 
-### `npm run build` fails to minify
+https://www.uipa.it/
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Documentazione tecnica
+
+Vedi `ARCHITECTURE.md` per la documentazione completa dell'architettura.
+
+## Sviluppato da
+
+FabianAndres002 per UIPA Nazionale
