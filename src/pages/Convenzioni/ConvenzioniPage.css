@@ -1,0 +1,187 @@
+/* ── INTRO ── */
+.convenzioni__intro {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 32px;
+  margin-bottom: 48px;
+  align-items: start;
+}
+
+.convenzioni__intro-testo p {
+  color: #444;
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+
+.convenzioni__inps-link {
+  display: inline-block;
+  margin-top: '8px';
+  color: #f0a500;
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-decoration: none;
+  border-bottom: 2px solid #f0a500;
+  padding-bottom: 2px;
+  transition: color 0.2s;
+}
+
+.convenzioni__inps-link:hover {
+  color: #c07800;
+}
+
+.convenzioni__intro-cta {
+  background: #fffaf0;
+  border-left: 4px solid #f0a500;
+  padding: 24px;
+  border-radius: 4px;
+}
+
+.convenzioni__intro-cta h3 {
+  color: #c07800;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.convenzioni__intro-cta p {
+  color: #555;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.convenzioni__btn {
+  display: inline-block;
+  background: #f0a500;
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: 3px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.88rem;
+  transition: background 0.2s;
+}
+
+.convenzioni__btn:hover {
+  background: #c07800;
+  color: #fff;
+}
+
+/* ── LISTA CONVENZIONI ── */
+.convenzioni__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.convenzioni__card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+
+.convenzioni__card:hover {
+  box-shadow: 0 4px 16px rgba(46,107,53,0.1);
+}
+
+.convenzioni__card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #fffaf0;
+  padding: 16px 24px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.convenzioni__numero {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #f0a500;
+  min-width: 40px;
+}
+
+.convenzioni__card-header h3 {
+  color: #c07800;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.convenzioni__card-body {
+  padding: 20px 24px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.convenzioni__card-body p {
+  color: #555;
+  line-height: 1.7;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.convenzioni__legge {
+  display: inline-block;
+  background: #fef5e0;
+  color: #c07800;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  align-self: flex-start;
+}
+
+/* ── BANNER ── */
+.convenzioni__banner {
+  background: linear-gradient(135deg, #c07800, #f0a500);
+  border-radius: 8px;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.convenzioni__banner-testo h3 {
+  color: #fff;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.convenzioni__banner-testo p {
+  color: #fde8a0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.convenzioni__banner-contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.convenzioni__banner-contacts a {
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  background: rgba(255,255,255,0.15);
+  padding: 10px 20px;
+  border-radius: 4px;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.convenzioni__banner-contacts a:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .convenzioni__intro { grid-template-columns: 1fr; }
+  .convenzioni__banner { flex-direction: column; align-items: flex-start; }
+}

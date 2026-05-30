@@ -1,0 +1,124 @@
+.contatti {
+  padding: 50px 0;
+}
+
+.contatti__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 50px;
+}
+
+.contatti__info h3 {
+  color: #c07800;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+.contatti__info-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+}
+
+.contatti__info-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #999;
+  margin-bottom: 2px;
+}
+
+.contatti__info-value {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.contatti__info-value a {
+  color: #f0a500;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.contatti__info-value a:hover {
+  color: #c07800;
+}
+
+.contatti__mappa {
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+
+/* FORM */
+.contatti__form-section {
+  background: #fffcf0;
+  padding: 50px 0;
+}
+
+.contatti__form {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 30px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #444;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #f0a500;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 130px;
+}
+
+.form__privacy {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.82rem;
+  color: #666;
+}
+
+.form__privacy input {
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.form__submit {
+  align-self: flex-start;
+}
+
+@media (max-width: 900px) {
+  .contatti__grid { grid-template-columns: 1fr; }
+}

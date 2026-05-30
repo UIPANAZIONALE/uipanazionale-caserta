@@ -1,0 +1,63 @@
+.giunta__intro {
+  margin-bottom: 40px;
+  max-width: 700px;
+}
+
+.giunta__intro p {
+  color: #555;
+  line-height: 1.8;
+  font-size: 0.95rem;
+}
+
+.giunta__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.giunta__card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-top: 3px solid #f0a500;
+  border-radius: 8px;
+  padding: 32px 24px;
+  text-align: center;
+  transition: box-shadow 0.2s;
+}
+
+.giunta__card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.giunta__avatar {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, #1a2266, #2b3990);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 auto 16px;
+}
+
+.giunta__card h3 {
+  color: #1a2266;
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.giunta__card p {
+  color: #f0a500;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .giunta__grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,22 @@
+.page-header {
+  background: linear-gradient(90deg, #c07800, #f0a500);
+  padding: 36px 0;
+}
+
+.page-header__titolo {
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.page-header__sottotitolo {
+  color: #fde8a0;
+  font-size: 0.95rem;
+  margin-top: 6px;
+  font-style: italic;
+}
+
+.page-content {
+  padding: 50px 0;
+  min-height: 400px;
+}
