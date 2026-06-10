@@ -1,0 +1,44 @@
+/* =============================================
+   UIPA Caserta – Variabili e stili globali
+   ============================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --verde:        #2e6b35;
+  --verde-scuro:  #1e4a23;
+  --verde-chiaro: #4a9c54;
+  --bianco:       #ffffff;
+  --grigio:       #f4f4f4;
+  --grigio-medio: #e0e0e0;
+  --testo:        #333333;
+  --testo-chiaro: #666666;
+  --font:         'Open Sans', Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  color: var(--testo);
+  font-size: 15px;
+  line-height: 1.6;
+  background: var(--bianco);
+}
+
+a {
+  color: var(--verde);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--verde-chiaro);
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
