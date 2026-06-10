@@ -20,6 +20,9 @@ import PresidentePage from './pages/ChiSiamo/PresidentePage';
 import GiuntaEsecutivaPage from './pages/ChiSiamo/GiuntaEsecutivaPage';
 import ServiziPatronatoPage from './pages/Servizi/ServiziPatronatoPage';
 import ServiziCafPage from './pages/Servizi/ServiziCafPage';
+import NewsPage from './pages/News/NewsPage';
+import NewsDettaglioPage from './pages/News/NewsDettaglioPage';
+
 const ComingSoon = ({ titolo }) => (
   <div style={{ padding: '60px 20px', maxWidth: '800px', margin: '0 auto' }}>
     <h1 style={{ color: '#2e6b35', marginBottom: '16px' }}>{titolo}</h1>
@@ -53,6 +56,8 @@ function App() {
         <Route path="/contatti/dove-siamo" element={<DoveSiamoPage />} />
         <Route path="/login" element={<ComingSoon titolo="Area Riservata" />} />
         <Route path="*" element={<NotFoundPage />} />
+        <Route path="/news" element={<NewsPage />} />
+        <Route path="/news/:slug" element={<NewsDettaglioPage />} />
       </Routes>
       <Footer />
     </Router>
