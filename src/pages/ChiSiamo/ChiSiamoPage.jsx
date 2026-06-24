@@ -8,6 +8,7 @@ const ChiSiamoPage = () => {
     <PageTemplate
       titolo="Chi siamo"
       sottotitolo="Unione Italiana Professionalita in Agricoltura"
+      immagine={require('../../assets/hero-chi-siamo.png')}
     >
 
       <div className="chisiamo__intro">

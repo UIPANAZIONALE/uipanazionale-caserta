@@ -19,7 +19,7 @@ const HomePage = () => {
   return (
     <div>
 
-     {/* HERO */}
+    {/* HERO */}
 <section className="hero">
   <video
     className="hero__video"
@@ -31,12 +31,35 @@ const HomePage = () => {
     <source src={require('../../assets/hero.mp4')} type="video/mp4" />
   </video>
   <div className="hero__overlay">
-    <div className="container hero__content">
-      <h1 className="hero__title">Unione Italiana Professionalita in Agricoltura</h1>
-      <p className="hero__sub">Tutela i diritti e gli interessi dei lavoratori autonomi in agricoltura</p>
+    <div className="hero__content container">
+      <h1 className="hero__title">
+        Unione Italiana Professionalita in Agricoltura
+      </h1>
+      <p className="hero__sub">
+        Tutela i diritti e gli interessi dei lavoratori autonomi<br />
+        nel settore agricolo e agroalimentare
+      </p>
       <div className="hero__cta">
         <Link to="/chi-siamo" className="btn btn-verde">Chi siamo</Link>
         <Link to="/contatti" className="btn btn-outline">Contattaci</Link>
+      </div>
+      <div className="hero__stats">
+        <div className="hero__stat">
+          <span className="hero__stat-num">40+</span>
+          <span className="hero__stat-label">Sedi in Italia</span>
+        </div>
+        <div className="hero__stat">
+          <span className="hero__stat-num">30+</span>
+          <span className="hero__stat-label">Anni di esperienza</span>
+        </div>
+        <div className="hero__stat">
+          <span className="hero__stat-num">7</span>
+          <span className="hero__stat-label">Servizi disponibili</span>
+        </div>
+        <div className="hero__stat">
+          <span className="hero__stat-num">100%</span>
+          <span className="hero__stat-label">Gratuito per il cittadino</span>
+        </div>
       </div>
     </div>
   </div>

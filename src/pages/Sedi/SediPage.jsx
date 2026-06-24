@@ -61,7 +61,7 @@ const SediPage = () => {
   });
 
   return (
-    <PageTemplate titolo="Sedi" sottotitolo="Trova la sede UIPA piu vicina a te">
+    <PageTemplate titolo="Sedi" sottotitolo="Trova la sede UIPA piu vicina a te" immagine={require('../../assets/hero-sedi.png')}>
 
       {/* STATS */}
       <div className="sedi__stats">

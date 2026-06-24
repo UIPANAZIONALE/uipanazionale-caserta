@@ -29,7 +29,7 @@ const ContattiPage = () => {
   };
 
   return (
-    <PageTemplate titolo="Contatti" sottotitolo="Siamo a tua disposizione">
+    <PageTemplate titolo="Contatti" sottotitolo="Siamo a tua disposizione" immagine={require('../../assets/hero-contatti.png')}>
 
       {/* INFO + MAPPA */}
       <div className="contatti__grid">

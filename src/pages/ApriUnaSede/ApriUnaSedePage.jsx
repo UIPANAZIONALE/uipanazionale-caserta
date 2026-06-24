@@ -54,7 +54,7 @@ const ApriUnaSedePage = () => {
   };
 
   return (
-    <PageTemplate titolo="Apri una Sede" sottotitolo="Entra a far parte della rete UIPA">
+    <PageTemplate titolo="Apri una Sede" sottotitolo="Entra a far parte della rete UIPA" immagine={require('../../assets/hero-apri-sede.png')}>
 
       {/* SCEGLI TIPO SEDE */}
       <div className="aprisede__scegli">

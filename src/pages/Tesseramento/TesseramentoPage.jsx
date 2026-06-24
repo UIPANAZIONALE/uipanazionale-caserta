@@ -48,7 +48,7 @@ const TesseramentoPage = () => {
   };
 
   return (
-    <PageTemplate titolo="Tesseramento" sottotitolo="Campagna Tesseramento 2025">
+    <PageTemplate titolo="Tesseramento" sottotitolo="Campagna Tesseramento 2025" immagine={require('../../assets/hero-tesseramento.png')}>
 
       {/* SLOGAN */}
       <div className="tessera__slogan">

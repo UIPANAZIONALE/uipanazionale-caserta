@@ -31,7 +31,8 @@ const convenzioni = [
 ];
 
 const ConvenzioniPage = () => (
-  <PageTemplate titolo="Convenzioni" sottotitolo="Convenzioni INPS attive con UIPA Nazionale">
+  <PageTemplate titolo="Convenzioni" sottotitolo="Convenzioni INPS attive con UIPA Nazionale"
+  immagine={require('../../assets/hero-convenzioni.png')}>
 
     {/* Intro */}
     <div className="convenzioni__intro">

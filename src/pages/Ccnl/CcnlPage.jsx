@@ -27,7 +27,7 @@ const CcnlPage = () => {
   const [aperto, setAperto] = useState(null);
 
   return (
-    <PageTemplate titolo="CCNL" sottotitolo="Contratti Collettivi Nazionali di Lavoro">
+    <PageTemplate titolo="CCNL" sottotitolo="Contratti Collettivi Nazionali di Lavoro" immagine={require('../../assets/hero-ccnl.png')}>
 
       {/* INTRO */}
       <div className="ccnl__intro">

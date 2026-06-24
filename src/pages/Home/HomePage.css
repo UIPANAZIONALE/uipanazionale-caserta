@@ -1,7 +1,7 @@
 /* ── HERO ── */
 .hero {
   position: relative;
-  min-height: 360px;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -20,48 +20,92 @@
 .hero__overlay {
   position: absolute;
   inset: 0;
-  background: rgba(30, 74, 35, 0.65);
+  background: linear-gradient(
+    135deg,
+    rgba(26, 34, 102, 0.85) 0%,
+    rgba(43, 57, 144, 0.6) 50%,
+    rgba(240, 165, 0, 0.3) 100%
+  );
   z-index: 1;
   display: flex;
   align-items: center;
-  padding: 60px 0;
+  padding: 0;
 }
 
 .hero__content {
   position: relative;
   z-index: 2;
-  max-width: 620px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 40px;
+  width: 100%;
 }
+
 .hero__title {
-  font-size: 2.4rem;
+  font-size: 3.5rem;
   font-weight: 800;
   color: #fff;
-  margin-bottom: 10px;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+  margin-bottom: 20px;
+  text-shadow: 2px 4px 16px rgba(0,0,0,0.4);
+  line-height: 1.2;
+  letter-spacing: -0.5px;
 }
 
 .hero__sub {
-  font-size: 1rem;
-  color: #fff;
-  margin-bottom: 28px;
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.9);
+  margin-bottom: 40px;
   font-style: italic;
-  text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+  text-shadow: 1px 2px 8px rgba(0,0,0,0.4);
+  line-height: 1.6;
 }
 
 .hero__cta {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 60px;
 }
 
-.btn {
-  display: inline-block;
-  padding: 12px 28px;
-  border-radius: 3px;
-  font-size: 0.88rem;
+.hero__stats {
+  display: flex;
+  gap: 48px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+.hero__stat {
+  text-align: center;
+}
+
+.hero__stat-num {
+  display: block;
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #f0a500;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.hero__stat-label {
+  display: block;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.8);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn {display: inline-block;
+  padding: 14px 36px;
+  border-radius: 4px;
+  font-size: 0.95rem;
   font-weight: 700;
   text-decoration: none;
-  transition: background 0.2s, color 0.2s;
+  transition: all 0.2s;
   letter-spacing: 0.5px;
 }
 
@@ -73,6 +117,7 @@
 
 .btn-verde:hover {
   background: #c07800;
+  border-color: #c07800;
   color: #fff;
 }
 
@@ -84,9 +129,15 @@
 
 .btn-outline:hover {
   background: #fff;
-  color: #f0a500;
+  color: #1a2266;
 }
 
+@media (max-width: 768px) {
+  .hero__title { font-size: 2.2rem; }
+  .hero__sub { font-size: 1rem; }
+  .hero__stats { gap: 24px; }
+  .hero__stat-num { font-size: 1.8rem; }
+}
 /* ── SERVIZI ── */
 .servizi-section {
   padding: 50px 0;

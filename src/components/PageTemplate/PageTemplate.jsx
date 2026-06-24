@@ -1,22 +1,30 @@
 import React from 'react';
 import './PageTemplate.css';
 
-const PageTemplate = ({ titolo, sottotitolo, children }) => {
+const PageTemplate = ({ titolo, sottotitolo, immagine, children }) => {
   return (
-    <div>
-      <div className="page-header">
-        <div className="container">
-          <h1 className="page-header__titolo">{titolo}</h1>
-          {sottotitolo && (
-            <p className="page-header__sottotitolo">{sottotitolo}</p>
-          )}
+    <div className="page">
+      <div
+        className="page__header"
+        style={immagine ? {
+          backgroundImage: `url(${immagine})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        } : {}}
+      >
+        <div className="page__header-overlay">
+          <div className="container">
+            <h1 className="page__title">{titolo}</h1>
+            {sottotitolo && <p className="page__subtitle">{sottotitolo}</p>}
+          </div>
         </div>
       </div>
-      <section className="page-content">
+
+      <div className="page__body section">
         <div className="container">
           {children}
         </div>
-      </section>
+      </div>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PageTemplate from '../../components/PageTemplate/PageTemplate';
 import './ServiziPage.css';
 
 const servizi = [
@@ -55,56 +56,39 @@ const servizi = [
 
 const ServiziPage = () => {
   return (
-    <div>
-
-      {/* HEADER PAGINA */}
-      <div style={{ background: 'linear-gradient(90deg, #c07800, #f0a500)', padding: '36px 0' }}>
-        <div className="container">
-          <h1 style={{ color: '#fff', fontSize: '1.8rem', fontWeight: '800' }}>Servizi</h1>
-          <p style={{ color: '#fde8a0', fontSize: '0.95rem', marginTop: '6px' }}>
-            Tutti i servizi offerti da UIPA
-          </p>
-        </div>
+    <PageTemplate
+      titolo="Servizi"
+      sottotitolo="Tutti i servizi offerti da UIPA"
+      immagine={require('../../assets/hero-servizi.png')}
+    >
+      <h2 className="section-title">Cosa offriamo</h2>
+      <div className="servizi-page__grid">
+        {servizi.map((s, idx) => {
+          if (s.esterno) {
+            return (
+              <a
+                key={idx}
+                href={s.url}
+                className="servizio-page-card servizio-page-card--esterno"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <h3 className="servizio-page-card__title">{s.titolo}</h3>
+                <p className="servizio-page-card__desc">{s.desc}</p>
+                <span className="servizio-page-card__cta">Vai al sito</span>
+              </a>
+            );
+          }
+          return (
+            <Link key={idx} to={s.link} className="servizio-page-card">
+              <h3 className="servizio-page-card__title">{s.titolo}</h3>
+              <p className="servizio-page-card__desc">{s.desc}</p>
+              <span className="servizio-page-card__cta">Scopri di piu</span>
+            </Link>
+          );
+        })}
       </div>
-
-      {/* GRIGLIA SERVIZI */}
-      <section className="servizi-page">
-        <div className="container">
-          <h2 className="section-title">Cosa offriamo</h2>
-          <div className="servizi-page__grid">
-            {servizi.map((s, idx) => {
-              if (s.esterno) {
-                return (
-                    <a
-                    key={idx}
-                    href={s.url}
-                    className="servizio-page-card servizio-page-card--esterno"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <h3 className="servizio-page-card__title">{s.titolo}</h3>
-                    <p className="servizio-page-card__desc">{s.desc}</p>
-                    <span className="servizio-page-card__cta">Vai al sito</span>
-                  </a>
-                );
-              }
-              return (
-                <Link
-                  key={idx}
-                  to={s.link}
-                  className="servizio-page-card"
-                >
-                  <h3 className="servizio-page-card__title">{s.titolo}</h3>
-                  <p className="servizio-page-card__desc">{s.desc}</p>
-                  <span className="servizio-page-card__cta">Scopri di piu</span>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-    </div>
+    </PageTemplate>
   );
 };
 
