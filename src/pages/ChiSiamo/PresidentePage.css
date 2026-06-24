@@ -1,0 +1,145 @@
+.presidente__layout {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.presidente__nome {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1a2266;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 3px solid #f0a500;
+}
+
+.presidente__info {
+  background: #f8f9fd;
+  border-left: 4px solid #2b3990;
+  padding: 16px 20px;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+
+.presidente__info p {
+  color: #444;
+  font-size: 0.88rem;
+  margin-bottom: 6px;
+  font-style: italic;
+}
+
+.presidente__info p:last-child {
+  margin-bottom: 0;
+}
+
+.presidente__bio {
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 28px;
+}
+
+.presidente__sezione {
+  margin-bottom: 28px;
+}
+
+.presidente__sezione h3,
+.presidente__missione h3 {
+  color: #1a2266;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #f0a500;
+}
+
+.presidente__sezione ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.presidente__sezione ul li {
+  color: #555;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  padding-left: 16px;
+  border-left: 3px solid #f0a500;
+}
+
+.presidente__missione {
+  background: linear-gradient(135deg, #1a2266, #2b3990);
+  padding: 24px;
+  border-radius: 8px;
+}
+
+.presidente__missione h3 {
+  color: #f0a500;
+  border-bottom-color: #f0a500;
+}
+
+.presidente__missione p {
+  color: rgba(255,255,255,0.9);
+  line-height: 1.8;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* FOTO */
+.presidente__foto-col {
+  position: sticky;
+  top: 100px;
+}
+
+.presidente__foto-box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.presidente__foto-placeholder {
+  background: #f0f2fa;
+  border: 2px dashed #2b3990;
+  border-radius: 8px;
+  height: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #2b3990;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.presidente__card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-top: 3px solid #f0a500;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+}
+
+.presidente__card h4 {
+  color: #1a2266;
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.presidente__card p {
+  color: #666;
+  font-size: 0.82rem;
+  margin-bottom: 4px;
+}
+
+@media (max-width: 900px) {
+  .presidente__layout {
+    grid-template-columns: 1fr;
+  }
+  .presidente__foto-col {
+    position: static;
+  }
+}

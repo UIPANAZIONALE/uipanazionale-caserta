@@ -1,0 +1,93 @@
+.chisiamo {
+  padding: 50px 0;
+}
+
+.chisiamo__intro {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  margin-bottom: 50px;
+}
+
+.chisiamo__testo p {
+  margin-bottom: 16px;
+  color: #444;
+  line-height: 1.8;
+}
+
+.chisiamo__box {
+  background: #fffaf0;
+  border-left: 4px solid #f0a500;
+  padding: 24px;
+  border-radius: 4px;
+  height: fit-content;
+}
+
+.chisiamo__box h3 {
+  color: #c07800;
+  margin-bottom: 16px;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.chisiamo__box ul {
+  list-style: none;
+}
+
+.chisiamo__box ul li {
+  margin-bottom: 10px;
+}
+
+.chisiamo__box ul li a {
+  color: #f0a500;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.15s;
+}
+
+.chisiamo__box ul li a:hover {
+  color: #c07800;
+}
+
+.chisiamo__valori {
+  background: #fffcf0;
+  padding: 40px 0;
+  margin-top: 40px;
+}
+
+.chisiamo__valori-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 30px;
+}
+
+.valore-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-top: 3px solid #f0a500;
+  padding: 24px;
+  border-radius: 4px;
+}
+
+.valore-card h3 {
+  color: #c07800;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.valore-card p {
+  color: #666;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .chisiamo__intro { grid-template-columns: 1fr; }
+  .chisiamo__valori-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 600px) {
+  .chisiamo__valori-grid { grid-template-columns: 1fr; }
+}

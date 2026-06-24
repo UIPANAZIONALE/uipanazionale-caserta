@@ -1,0 +1,226 @@
+/* ── INTRO ── */
+.patronato__intro {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 32px;
+  margin-bottom: 48px;
+  align-items: start;
+}
+
+.patronato__intro-testo p {
+  color: #444;
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+
+.patronato__intro-box {
+  background: #fffaf0;
+  border-left: 4px solid #f0a500;
+  padding: 24px;
+  border-radius: 4px;
+}
+
+.patronato__intro-box h3 {
+  color: #c07800;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.patronato__intro-box p {
+  color: #555;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.patronato__btn {
+  display: inline-block;
+  background: #f0a500;
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: 3px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.88rem;
+  transition: background 0.2s;
+}
+
+.patronato__btn:hover {
+  background: #c07800;
+  color: #fff;
+}
+
+/* ── CATEGORIE ── */
+.patronato__categorie {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.patronato__categoria-card {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid #e0e0e0;
+  border-top: 3px solid #f0a500;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #333;
+  background: #fff;
+  transition: box-shadow 0.2s, transform 0.15s;
+}
+
+.patronato__categoria-card:hover {
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+.patronato__categoria-card h3 {
+  color: #1a2266;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.patronato__categoria-card p {
+  color: #666;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  flex: 1;
+  margin-bottom: 12px;
+}
+
+.patronato__categoria-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #f0a500;
+}
+
+/* ── CATEGORIA SERVIZI ── */
+.categoria__desc {
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 32px;
+  font-size: 0.95rem;
+}
+
+.categoria__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.categoria__card {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid #e0e0e0;
+  border-left: 4px solid #f0a500;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #333;
+  background: #fff;
+  transition: box-shadow 0.2s;
+}
+
+.categoria__card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.categoria__card h3 {
+  color: #1a2266;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.categoria__card p {
+  color: #666;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  flex: 1;
+  margin-bottom: 12px;
+}
+
+.categoria__leggi {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #f0a500;
+}
+
+/* ── DETTAGLIO ── */
+.dettaglio__back {
+  margin-bottom: 32px;
+}
+
+.dettaglio__back a {
+  color: #2b3990;
+  font-weight: 600;
+  font-size: 0.88rem;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.dettaglio__back a:hover {
+  color: #f0a500;
+}
+
+.dettaglio__contenuto {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.dettaglio__sezione {
+  padding: 24px;
+  background: #f8f9fd;
+  border-radius: 8px;
+  border-left: 4px solid #2b3990;
+}
+
+.dettaglio__sezione h3 {
+  color: #1a2266;
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+.dettaglio__sezione p {
+  color: #555;
+  line-height: 1.8;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.dettaglio__cta {
+  background: linear-gradient(135deg, #1a2266, #2b3990);
+  border-radius: 8px;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.dettaglio__cta h3 {
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.dettaglio__cta p {
+  color: rgba(255,255,255,0.8);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .patronato__intro { grid-template-columns: 1fr; }
+  .patronato__categorie { grid-template-columns: 1fr 1fr; }
+  .categoria__grid { grid-template-columns: 1fr; }
+  .dettaglio__cta { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 600px) {
+  .patronato__categorie { grid-template-columns: 1fr; }
+}
