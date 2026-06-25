@@ -12,7 +12,9 @@ const DettaglioServizio = ({ categoriaId, servizioId }) => {
   if (!servizio) return null;
 
   return (
-    <PageTemplate titolo={servizio.titolo} sottotitolo={categoria.titolo}>
+    <PageTemplate titolo={servizio.titolo} sottotitolo={categoria.titolo}
+    >
+
       <div className="dettaglio__back">
         <Link to={`/servizi/patronato/${categoriaId}`}>← Torna a {categoria.titolo}</Link>
       </div>
@@ -39,7 +41,8 @@ const CategoriaServizi = ({ categoriaId }) => {
   if (!categoria) return null;
 
   return (
-    <PageTemplate titolo={categoria.titolo} sottotitolo="Servizi di Patronato UIPA">
+    <PageTemplate titolo={categoria.titolo} sottotitolo="Servizi di Patronato UIPA"
+    >
       <div className="dettaglio__back">
         <Link to="/servizi/patronato">← Torna ai Servizi di Patronato</Link>
       </div>
@@ -69,7 +72,8 @@ const ServiziPatronatoPage = () => {
   if (categoriaId) return <CategoriaServizi categoriaId={categoriaId} />;
 
   return (
-    <PageTemplate titolo="Servizi di Patronato" sottotitolo="Patronato ANMIL – Assistenza gratuita per i cittadini">
+    <PageTemplate titolo="Servizi di Patronato" sottotitolo="Patronato ANMIL – Assistenza gratuita per i cittadini"
+    immagine={require('../../assets/heropatronato.png')}>
 
       <div className="patronato__intro">
         <div className="patronato__intro-testo">

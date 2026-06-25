@@ -60,11 +60,11 @@
 }
 
 .footer__bottom {
-  background: #152e17;
+  background: #1a2266; 
   padding: 14px 20px;
   text-align: center;
   font-size: 0.78rem;
-  color: #8ab98c;
+  color: #8a8db9;
 }
 
 .footer__bottom a {

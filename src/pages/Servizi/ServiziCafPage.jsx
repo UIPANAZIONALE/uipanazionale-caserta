@@ -10,7 +10,8 @@ const DettaglioServizioCaf = ({ servizioId }) => {
   if (!servizio) return null;
 
   return (
-    <PageTemplate titolo={servizio.titolo} sottotitolo="Servizi CAF UIPA">
+    <PageTemplate titolo={servizio.titolo} sottotitolo="Servizi CAF UIPA"
+    >
       <div className="dettaglio__back">
         <Link to="/servizi/caf">← Torna ai Servizi CAF</Link>
       </div>
@@ -44,7 +45,8 @@ const ServiziCafPage = () => {
   );
 
   return (
-    <PageTemplate titolo="Servizi CAF" sottotitolo="Centro di Assistenza Fiscale UIPA">
+    <PageTemplate titolo="Servizi CAF" sottotitolo="Centro di Assistenza Fiscale UIPA"
+    immagine={require('../../assets/heropatronato.png')}>
 
       {/* INTRO */}
       <div className="caf__intro">

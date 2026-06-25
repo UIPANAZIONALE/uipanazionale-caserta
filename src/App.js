@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
-import TopBar from './components/TopBar/TopBar';
+
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import HomePage from './pages/Home/HomePage';
@@ -33,7 +33,6 @@ const ComingSoon = ({ titolo }) => (
 function App() {
   return (
     <Router>
-      <TopBar />
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />

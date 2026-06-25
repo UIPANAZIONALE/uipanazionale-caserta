@@ -9,7 +9,8 @@ const membri = [
 ];
 
 const GiuntaEsecutivaPage = () => (
-  <PageTemplate titolo="Giunta Esecutiva" sottotitolo="Gli organi di governo di UIPA Nazionale">
+  <PageTemplate titolo="Giunta Esecutiva" sottotitolo="Gli organi di governo di UIPA Nazionale"
+    immagine={require('../../assets/herogiunta.png')}>
 
     <div className="giunta__intro">
       <p>

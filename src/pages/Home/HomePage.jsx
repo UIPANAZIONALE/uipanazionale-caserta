@@ -28,7 +28,7 @@ const HomePage = () => {
     loop
     playsInline
   >
-    <source src={require('../../assets/hero.mp4')} type="video/mp4" />
+    <source src={require('../../assets/hero2.mp4')} type="video/mp4" />
   </video>
   <div className="hero__overlay">
     <div className="hero__content container">
@@ -60,6 +60,45 @@ const HomePage = () => {
           <span className="hero__stat-num">100%</span>
           <span className="hero__stat-label">Gratuito per il cittadino</span>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+{/* BANNER UNICAF */}
+<section className="banner-unicaf">
+  <div className="container banner-unicaf__inner">
+    <div className="banner-unicaf__testo">
+      <span className="banner-unicaf__tag">I nostri servizi online</span>
+      <h2>Pratiche fiscali semplici, risultati migliori</h2>
+      <p>
+        ISEE, 730, Patronato, Successioni e molto altro. Operatori qualificati
+        ti assistono a distanza — carichi i documenti, noi ci occupiamo del resto.
+      </p>
+      <div className="banner-unicaf__features">
+        <span>✓ Nessun appuntamento in ufficio</span>
+        <span>✓ Risposta entro 24 ore</span>
+        <span>✓ CAF autorizzato dal MEF</span>
+      </div>
+      <a href="https://unicafsrl.it" target="_blank" rel="noopener noreferrer" className="banner-unicaf__btn">
+        Scopri i servizi →
+      </a>
+    </div>
+    <div className="banner-unicaf__numeri">
+      <div className="banner-unicaf__numero">
+        <span className="banner-unicaf__num">10.000+</span>
+        <span className="banner-unicaf__label">Pratiche gestite</span>
+      </div>
+      <div className="banner-unicaf__numero">
+        <span className="banner-unicaf__num">62</span>
+        <span className="banner-unicaf__label">Servizi disponibili</span>
+      </div>
+      <div className="banner-unicaf__numero">
+        <span className="banner-unicaf__num">24h</span>
+        <span className="banner-unicaf__label">Tempo di risposta</span>
+      </div>
+      <div className="banner-unicaf__numero">
+        <span className="banner-unicaf__num">100%</span>
+        <span className="banner-unicaf__label">Online, da casa</span>
       </div>
     </div>
   </div>

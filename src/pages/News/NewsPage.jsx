@@ -16,7 +16,8 @@ const NewsPage = () => {
   });
 
   return (
-    <PageTemplate titolo="News" sottotitolo="Notizie e aggiornamenti da UIPA">
+    <PageTemplate titolo="News" sottotitolo="Notizie e aggiornamenti da UIPA"
+    immagine={require('../../assets/heronews.jpg')}>
 
       {/* RICERCA */}
       <div className="news-page__ricerca">

@@ -45,11 +45,11 @@ const Navbar = () => {
 
   return (
     <header className="navbar">
-      <div className="container navbar__inner">
+      <div className="navbar__inner">
 
-      <Link to="/" className="navbar__logo">
-  <img src={require('../../assets/logo.png')} alt="UIPA Logo" className="navbar__logo-img" />
-</Link>
+        <Link to="/" className="navbar__logo">
+          <img src={require('../../assets/logo.png')} alt="UIPA Logo" className="navbar__logo-img" />
+        </Link>
 
         <button
           className={menuOpen ? 'navbar__hamburger open' : 'navbar__hamburger'}
@@ -108,8 +108,28 @@ const Navbar = () => {
               )}
             </li>
           ))}
-        </ul>
 
+          {/* Separatore */}
+          <li className="navbar__separator"></li>
+
+          {/* Link utility */}
+          <li className="navbar__item">
+            <a href="http://gestionale.uipa.it" target="_blank" rel="noopener noreferrer" className="navbar__link navbar__link--utility">
+              Gestionale
+            </a>
+          </li>
+          <li className="navbar__item">
+            <a href="/login" className="navbar__link navbar__link--utility" title="Area Riservata">
+              🔒
+            </a>
+          </li>
+          <li className="navbar__item">
+            <a href="https://webmail.aruba.it/" target="_blank" rel="noopener noreferrer" className="navbar__link navbar__link--utility">
+              Web Mail
+            </a>
+          </li>
+
+        </ul>
       </div>
     </header>
   );

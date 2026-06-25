@@ -3,7 +3,10 @@ import PageTemplate from '../../components/PageTemplate/PageTemplate';
 import './PresidentePage.css';
 
 const PresidentePage = () => (
-  <PageTemplate titolo="Il Presidente" sottotitolo="Chi guida UIPA Nazionale">
+  <PageTemplate titolo="Il Presidente" sottotitolo="Chi guida UIPA Nazionale"
+  immagine={require('../../assets/heropresidente.png')}
+  
+  >
 
     <div className="presidente__layout">
 
