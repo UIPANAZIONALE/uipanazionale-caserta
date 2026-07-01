@@ -76,10 +76,26 @@ const NewsDettaglioPage = () => {
           <p className="news-det__estratto">{articolo.estratto}</p>
 
           <div className="news-det__contenuto">
-            {Array.isArray(articolo.contenuto) && articolo.contenuto.map((sezione, idx) => (
-              <p key={idx}>{sezione.testo}</p>
-            ))}
-          </div>
+  {Array.isArray(articolo.contenuto) && articolo.contenuto.map((sezione, idx) => (
+    <div key={idx} className="news-sezione">
+      {sezione.titolo && <h3 className="news-sezione__titolo">{sezione.titolo}</h3>}
+      {sezione.immagine && sezione.immaginePos === 'sopra' && (
+        <img src={`${API_URL}${sezione.immagine}`} alt="" className="news-sezione__img" />
+      )}
+      {sezione.immagine && (sezione.immaginePos === 'sinistra' || sezione.immaginePos === 'destra') ? (
+        <div className={`news-sezione__float news-sezione__float--${sezione.immaginePos}`}>
+          <img src={`${API_URL}${sezione.immagine}`} alt="" className="news-sezione__img-float" />
+          {sezione.testo && <div dangerouslySetInnerHTML={{ __html: sezione.testo }} />}
+        </div>
+      ) : (
+        sezione.testo && <div dangerouslySetInnerHTML={{ __html: sezione.testo }} />
+      )}
+      {sezione.immagine && sezione.immaginePos === 'sotto' && (
+        <img src={`${API_URL}${sezione.immagine}`} alt="" className="news-sezione__img" />
+      )}
+    </div>
+  ))}
+</div>
 
           <div className="news-det__cta">
             <h3>Hai bisogno di assistenza?</h3>
