@@ -1,74 +1,127 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import PageTemplate from '../../components/PageTemplate/PageTemplate';
-import news from '../../data/news';
 import './NewsDettaglioPage.css';
+
+const API_URL = 'http://152.228.137.245';
 
 const NewsDettaglioPage = () => {
   const { slug } = useParams();
-  const articolo = news.find(n => n.slug === slug);
+  const [articolo, setArticolo] = useState(null);
+  const [correlati, setCorrelati] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  if (!articolo) {
-    return (
-      <PageTemplate titolo="Articolo non trovato">
-        <p>L'articolo che cerchi non esiste o e stato rimosso.</p>
-        <Link to="/news" className="news-det__back-btn">← Torna alle news</Link>
-      </PageTemplate>
-    );
-  }
+  useEffect(() => {
+    fetch(`${API_URL}/api/news/${slug}`)
+      .then(res => {
+        if (!res.ok) throw new Error('Non trovato');
+        return res.json();
+      })
+      .then(data => {
+        setArticolo(data);
+        return fetch(`${API_URL}/api/news`);
+      })
+      .then(res => res.json())
+      .then(tutti => {
+        const corr = tutti.filter(n => n.categoria === articolo?.categoria && n.slug !== slug).slice(0, 3);
+        setCorrelati(corr);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, [slug]);
 
-  // Articoli correlati (stessa categoria, escluso quello attuale)
-  const correlati = news
-    .filter(n => n.categoria === articolo.categoria && n.id !== articolo.id)
-    .slice(0, 3);
+  const formatData = (dataString) => {
+    if (!dataString) return '';
+    const d = new Date(dataString);
+    return d.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+  };
+
+  if (loading) return (
+    <PageTemplate titolo="Caricamento...">
+      <p>Caricamento articolo in corso...</p>
+    </PageTemplate>
+  );
+
+  if (!articolo) return (
+    <PageTemplate titolo="Articolo non trovato">
+      <p>L articolo che cerchi non esiste o e stato rimosso.</p>
+      <Link to="/news" className="news-det__back-btn">← Torna alle news</Link>
+    </PageTemplate>
+  );
 
   return (
     <PageTemplate titolo={articolo.titolo} sottotitolo={articolo.categoria}>
 
-      {/* BACK + META */}
       <div className="news-det__meta">
         <Link to="/news" className="news-det__back">← Tutte le news</Link>
         <div className="news-det__info">
           <span className="news-det__cat">{articolo.categoria}</span>
-          <span className="news-det__data">{articolo.data}</span>
+          <span className="news-det__data">{formatData(articolo.data)}</span>
         </div>
       </div>
 
-      {/* ESTRATTO */}
-      <p className="news-det__estratto">{articolo.estratto}</p>
+      {/* LAYOUT ARTICOLO + SIDEBAR */}
+      <div className="news-det__layout">
 
-      {/* CONTENUTO */}
-      <div className="news-det__contenuto">
-        {articolo.contenuto.map((sezione, idx) => (
-          <div key={idx} className="news-det__sezione">
-            <h2>{sezione.titolo}</h2>
-            <p>{sezione.testo}</p>
-          </div>
-        ))}
-      </div>
+        {/* ARTICOLO */}
+        <div className="news-det__articolo">
+          {articolo.immagine && (
+            <img
+              src={`${API_URL}${articolo.immagine}`}
+              alt={articolo.titolo}
+              className="news-det__immagine"
+            />
+          )}
 
-      {/* CTA CONTATTI */}
-      <div className="news-det__cta">
-        <h3>Hai bisogno di assistenza?</h3>
-        <p>I nostri esperti sono a disposizione per aiutarti su questo argomento.</p>
-        <Link to="/contatti" className="news-det__btn">Contattaci</Link>
-      </div>
+          <p className="news-det__estratto">{articolo.estratto}</p>
 
-      {/* ARTICOLI CORRELATI */}
-      {correlati.length > 0 && (
-        <div className="news-det__correlati">
-          <h2 className="section-title">Articoli correlati</h2>
-          <div className="news-det__correlati-grid">
-            {correlati.map((n) => (
-              <Link key={n.id} to={`/news/${n.slug}`} className="news-det__correlato-card">
-                <span className="news-det__correlato-cat">{n.categoria}</span>
-                <h3>{n.titolo}</h3>
-                <span className="news-det__correlato-data">{n.data}</span>
-              </Link>
+          <div className="news-det__contenuto">
+            {Array.isArray(articolo.contenuto) && articolo.contenuto.map((sezione, idx) => (
+              <p key={idx}>{sezione.testo}</p>
             ))}
           </div>
+
+          <div className="news-det__cta">
+            <h3>Hai bisogno di assistenza?</h3>
+            <p>I nostri esperti sono a disposizione per aiutarti su questo argomento.</p>
+            <Link to="/contatti" className="news-det__btn">Contattaci</Link>
+          </div>
         </div>
-      )}
+
+        {/* SIDEBAR */}
+        <aside className="news-det__sidebar">
+          <div className="sidebar__box">
+            <h4>I nostri servizi</h4>
+            <ul className="sidebar__links">
+              <li><a href="https://unicafsrl.it" target="_blank" rel="noopener noreferrer">UNICAF – Pratiche fiscali online</a></li>
+              <li><a href="https://www.caauipa.it" target="_blank" rel="noopener noreferrer">CAA UIPA – Pratiche agricole</a></li>
+              <li><a href="https://www.patronatoanmil.it" target="_blank" rel="noopener noreferrer">Patronato ANMIL</a></li>
+              <li><a href="https://www.usacademy.it" target="_blank" rel="noopener noreferrer">US Academy – Formazione</a></li>
+            </ul>
+          </div>
+
+          {correlati.length > 0 && (
+            <div className="sidebar__box">
+              <h4>Articoli correlati</h4>
+              <div className="sidebar__correlati">
+                {correlati.map((n) => (
+                  <Link key={n.id} to={`/news/${n.slug}`} className="sidebar__correlato">
+                    <span className="sidebar__correlato-cat">{n.categoria}</span>
+                    <p>{n.titolo}</p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="sidebar__box sidebar__box--cta">
+            <h4>Hai bisogno di aiuto?</h4>
+            <p>Contatta la sede UIPA di Caserta per assistenza gratuita.</p>
+            <a href="tel:0823320088" className="sidebar__tel">0823 320088</a>
+          </div>
+        </aside>
+
+      </div>
 
     </PageTemplate>
   );

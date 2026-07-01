@@ -22,6 +22,8 @@ import ServiziPatronatoPage from './pages/Servizi/ServiziPatronatoPage';
 import ServiziCafPage from './pages/Servizi/ServiziCafPage';
 import NewsPage from './pages/News/NewsPage';
 import NewsDettaglioPage from './pages/News/NewsDettaglioPage';
+import LoginPage from './pages/Login/LoginPage';
+import AdminPage from './pages/Admin/AdminPage';
 
 const ComingSoon = ({ titolo }) => (
   <div style={{ padding: '60px 20px', maxWidth: '800px', margin: '0 auto' }}>
@@ -53,7 +55,8 @@ function App() {
         <Route path="/sedi" element={<SediPage />} />
         <Route path="/contatti" element={<ContattiPage />} />
         <Route path="/contatti/dove-siamo" element={<DoveSiamoPage />} />
-        <Route path="/login" element={<ComingSoon titolo="Area Riservata" />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/news" element={<NewsPage />} />
         <Route path="/news/:slug" element={<NewsDettaglioPage />} />

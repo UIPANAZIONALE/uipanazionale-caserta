@@ -1,0 +1,266 @@
+.admin-page {
+  min-height: 100vh;
+  background: #f4f4f4;
+}
+
+.admin-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* HEADER */
+.admin-header {
+  background: #1a2266;
+  padding: 16px 0;
+}
+
+.admin-header__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-header__inner h1 {
+  color: #fff;
+  font-size: 1.3rem;
+}
+
+.admin-header__user {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.admin-header__user span {
+  color: #c5cae9;
+  font-size: 0.85rem;
+}
+
+.admin-logout {
+  background: #f0a500;
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.admin-logout:hover {
+  background: #c07800;
+}
+
+/* CONTENT */
+.admin-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+
+.admin-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.admin-toolbar h2 {
+  color: #1a2266;
+  font-size: 1.3rem;
+}
+
+.admin-btn-new {
+  background: #2b3990;
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.admin-btn-new:hover {
+  background: #1a2266;
+}
+
+/* FORM */
+.admin-form {
+  background: #fff;
+  border-radius: 8px;
+  padding: 28px;
+  margin-bottom: 28px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.admin-form h3 {
+  color: #1a2266;
+  margin-bottom: 20px;
+}
+
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.admin-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.admin-form-group label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #444;
+}
+
+.admin-form-group input,
+.admin-form-group textarea {
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+}
+
+.admin-form-group input:focus,
+.admin-form-group textarea:focus {
+  border-color: #2b3990;
+}
+
+.admin-form-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.admin-btn-save {
+  background: #2e7d32;
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-btn-save:hover {
+  background: #1b5e20;
+}
+
+.admin-btn-cancel {
+  background: #e0e0e0;
+  color: #333;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-btn-cancel:hover {
+  background: #ccc;
+}
+
+/* LISTA NEWS */
+.admin-news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-news-item {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+}
+
+.admin-news-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.admin-news-info {
+  flex: 1;
+}
+
+.admin-news-cat {
+  display: inline-block;
+  background: #fffaf0;
+  color: #c07800;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 20px;
+  margin-bottom: 6px;
+}
+
+.admin-news-info h4 {
+  color: #1a2266;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+.admin-news-info p {
+  color: #666;
+  font-size: 0.82rem;
+}
+
+.admin-news-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.admin-btn-edit,
+.admin-btn-delete {
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-btn-edit {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.admin-btn-edit:hover {
+  background: #bbdefb;
+}
+
+.admin-btn-delete {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.admin-btn-delete:hover {
+  background: #ffcdd2;
+}
+
+@media (max-width: 700px) {
+  .admin-form-grid { grid-template-columns: 1fr; }
+  .admin-news-item { flex-direction: column; align-items: flex-start; }
+}

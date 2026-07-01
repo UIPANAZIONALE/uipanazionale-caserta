@@ -2,7 +2,8 @@ import React from 'react';
 import PageTemplate from '../../components/PageTemplate/PageTemplate';
 
 const DoveSiamoPage = () => (
-  <PageTemplate titolo="Dove siamo" sottotitolo="Come raggiungerci">
+  <PageTemplate titolo="Dove siamo" sottotitolo="Come raggiungerci"
+   immagine={require('../../assets/herodovesiamo.png')}>
 
     <p><strong>Via Arena, 37 – 81100 Caserta</strong></p>
     <p style={{ marginBottom: '20px' }}>
