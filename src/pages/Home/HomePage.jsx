@@ -1,7 +1,9 @@
-import React from 'react';
+import React,{ useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './HomePage.css';
-import newsData from '../../data/news';
+
+
+
 const servizi = [
   { titolo: 'Servizi di Patronato', desc: 'Gestione pratiche previdenziali e infortuni sul lavoro.', link: '/servizi/patronato' },
   { titolo: 'Intermediazione Lavoro', desc: 'Supporto per la ricerca e gestione del lavoro.', url: 'https://www.uidd.it/uidd/intermediazione-al-lavoro/' },
@@ -13,9 +15,17 @@ const servizi = [
   { titolo: 'Consulenza e Lavoro', desc: 'Supporto legale e consulenza sindacale.', link: '/servizi' },
 ];
 
-const news = newsData;
 
 const HomePage = () => {
+  const [news, setNews] = useState([])
+  
+useEffect(() => {
+  fetch('http://152.228.137.245/api/news')
+    .then(res => res.json())
+    .then(data => setNews(data.slice(0, 3)))
+    .catch(err => console.error(err));
+}, []);
+
   return (
     <div>
 
@@ -58,7 +68,7 @@ const HomePage = () => {
         </div>
         <div className="hero__stat">
           <span className="hero__stat-num">100%</span>
-          <span className="hero__stat-label">Gratuito per il cittadino</span>
+          <span className="hero__stat-label">A sostegno delle imprese</span>
         </div>
       </div>
     </div>
@@ -145,12 +155,17 @@ const HomePage = () => {
     </div>
     <div className="news-grid-home">
       {news.slice(0, 3).map((n) => (
-        <Link to={`/news/${n.slug}`} key={n.id} className="news-card">
-          <div className="news-card__cat">{n.categoria}</div>
-          <h3 className="news-card__titolo">{n.titolo}</h3>
-          <p className="news-card__estratto">{n.estratto}</p>
-          <span className="news-card__data">{n.data}</span>
-        </Link>
+       <Link to={`/news/${n.slug}`} key={n.id} className="news-card">
+  {n.immagine && (
+    <div className="news-card__img">
+      <img src={`http://152.228.137.245${n.immagine}`} alt={n.titolo} />
+    </div>
+  )}
+  <div className="news-card__cat">{n.categoria}</div>
+  <h3 className="news-card__titolo">{n.titolo}</h3>
+  <p className="news-card__estratto">{n.estratto}</p>
+  <span className="news-card__data">{n.data}</span>
+</Link>
       ))}
     </div>
   </div>
