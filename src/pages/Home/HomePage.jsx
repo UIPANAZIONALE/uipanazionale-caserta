@@ -31,15 +31,6 @@ useEffect(() => {
 
     {/* HERO */}
 <section className="hero">
-  {/* <video
-    className="hero__video"
-    autoPlay
-    muted
-    loop
-    playsInline
-  >
-    <source src={require('../../assets/hero2.mp4')} type="video/mp4" />
-  </video> */}
   <div className="hero__overlay">
     <div className="hero__content container">
       <h1 className="hero__title">
