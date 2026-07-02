@@ -90,7 +90,7 @@ const ContattiPage = () => {
 
       {/* FORM */}
       <div style={{ marginTop: '50px' }}>
-        <h2 className="section-title">Contattaci per maggiori informazioni</h2>
+        <h2 className="section-title">Contattaci per ulteriori informazioni</h2>
 
         {inviato ? (
           <div style={{
