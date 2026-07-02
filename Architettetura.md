@@ -1,8 +1,12 @@
-# UIPA Caserta — Documentazione Completa dell'Architettura
+# UIPA Caserta — Documentazione dell'Architettura
 
-Questo documento descrive in modo esaustivo ogni componente del sito UIPA Caserta:
-un sito vetrina multi-pagina con area riservata, form contatti e gestione news,
-realizzato in React 18 con React Router DOM v6.
+Documentazione tecnica del sito **UIPA Caserta**: sito vetrina multi-pagina con
+un **CMS di news dinamico** alimentato da un backend REST esterno e un **pannello
+di amministrazione** protetto da login.
+
+Frontend realizzato in **React 19** (Create React App) con **React Router DOM v7**.
+
+> Ultimo aggiornamento: 2 luglio 2026 — documento riallineato al codice reale.
 
 ---
 
@@ -14,11 +18,15 @@ realizzato in React 18 con React Router DOM v6.
 4. [Routing](#4-routing)
 5. [Componenti](#5-componenti)
 6. [Pagine](#6-pagine)
-7. [Stili CSS](#7-stili-css)
-8. [Sicurezza](#8-sicurezza)
-9. [GDPR e Privacy](#9-gdpr-e-privacy)
-10. [Flusso di lavoro Git](#10-flusso-di-lavoro-git)
-11. [Deploy e Infrastruttura](#11-deploy-e-infrastruttura)
+7. [Backend API e modello dati News](#7-backend-api-e-modello-dati-news)
+8. [Pannello Admin e Autenticazione](#8-pannello-admin-e-autenticazione)
+9. [Dati statici](#9-dati-statici)
+10. [Stili CSS](#10-stili-css)
+11. [Sicurezza e stato GDPR](#11-sicurezza-e-stato-gdpr)
+12. [Stato attuale, criticità e TODO](#12-stato-attuale-criticità-e-todo)
+13. [Sviluppo locale, build e deploy](#13-sviluppo-locale-build-e-deploy)
+14. [Flusso di lavoro Git](#14-flusso-di-lavoro-git)
+15. [Riepilogo per lo sviluppatore](#15-riepilogo-per-lo-sviluppatore)
 
 ---
 
@@ -26,35 +34,42 @@ realizzato in React 18 con React Router DOM v6.
 
 ### Cos'è UIPA Caserta
 
-Sito web istituzionale per la sede provinciale di Caserta di UIPA
+Sito web istituzionale della sede provinciale di Caserta di UIPA
 (Unione Italiana Professionalità in Agricoltura). Il sito offre:
 
-- **Presentazione istituzionale**: chi siamo, organi sociali, missione
-- **Catalogo servizi**: patronato, CAF, CAA, lavoro domestico, formazione
-- **News e notiziario**: articoli aggiornati su temi fiscali, agricoli e sindacali
-- **Form contatti**: con validazione, reCAPTCHA e mappa Google Maps
-- **Area riservata**: accesso protetto per operatori e amministratori
-- **Sezione collabora**: per chi vuole aprire una sede UIPA
+- **Presentazione istituzionale**: chi siamo, presidente, giunta esecutiva
+- **Catalogo servizi**: patronato, CAF, CAA, lavoro domestico, formazione, convenzioni
+- **News dinamiche**: sezione notizie gestita da un CMS con backend (elenco, filtri, dettaglio)
+- **Pannello Admin**: creazione/modifica/eliminazione news con editor di testo ed upload immagini
+- **Sezioni informative**: apri una sede, CCNL, tesseramento, sedi, contatti
 
 ### Stack
 
-| Componente     | Tecnologia                                |
-| -------------- | ----------------------------------------- |
-| Framework      | React 18 (Create React App)               |
-| Routing        | React Router DOM v6                       |
-| Stili          | CSS per componente (no Bootstrap, no MUI) |
-| Font           | Open Sans via Google Fonts                |
-| Autenticazione | JWT + httpOnly cookie                     |
-| Anti-spam      | Google reCAPTCHA v3                       |
-| Mappa          | Google Maps Embed API                     |
-| Video Hero     | MP4 loop (Pexels, royalty-free)           |
-| Deploy         | Da definire (Netlify / Vercel / VPS)      |
+| Componente     | Tecnologia                                              |
+| -------------- | ------------------------------------------------------- |
+| Framework      | React 19.2 (Create React App / `react-scripts` 5.0.1)   |
+| Routing        | React Router DOM v7                                      |
+| HTTP client    | `axios` 1.7.9 (admin/login) + `fetch` nativo (news pubbliche) |
+| Stili          | CSS per componente (nessuna libreria UI: no Bootstrap/MUI) |
+| Font           | Open Sans (via Google Fonts)                            |
+| Backend        | REST API esterna su VPS — `http://152.228.137.245` (repo separato) |
+| Autenticazione | JWT in `localStorage` + header `Authorization: Bearer`  |
+| Editor news    | Rich text custom (`contentEditable` + `document.execCommand`) |
+| Test           | Testing Library + Jest (via CRA)                        |
+| Deploy         | Da definire                                             |
+
+> ⚠️ **Attenzione**: alcune scelte descritte nella vecchia documentazione
+> (reCAPTCHA v3, cookie httpOnly, `PrivateRoute`, video hero MP4) **non sono
+> presenti nel codice attuale**. Vedi §12 per lo stato reale.
 
 ### Porte (sviluppo locale)
 
-| Servizio  | Porta | URL                   |
-| --------- | ----- | --------------------- |
-| App React | 3000  | http://localhost:3000 |
+| Servizio  | Porta | URL                     | Note                                    |
+| --------- | ----- | ----------------------- | --------------------------------------- |
+| App React | 3000  | http://localhost:3000   | Default CRA                             |
+| App React | 3001  | http://localhost:3001   | Fallback se la 3000 è occupata (`PORT=3001 npm start`) |
+
+Comando di avvio: **`npm start`** (il progetto è Create React App: **non** esiste `npm run dev`).
 
 ---
 
@@ -66,69 +81,69 @@ Sito web istituzionale per la sede provinciale di Caserta di UIPA
         Internet
            |
            v
-   +---------------+
-   | Browser       |
-   | (Visitatore)  |
-   +-------+-------+
+   +----------------+
+   |    Browser     |
+   | Visitatore /   |
+   |   Operatore    |
+   +-------+--------+
            |
            v
-+-------------------------------------------+
-|           React SPA (porta 3000)           |
-|                                            |
-|  +------------+  +----------+  +--------+ |
-|  | TopBar     |  | Navbar   |  | Footer | |
-|  | (sempre)   |  | (sticky) |  |(sempre)| |
-|  +------------+  +----------+  +--------+ |
-|                                            |
-|  +----------------------------------------+
-|  |              React Router v6            |
-|  |                                         |
-|  |  /              → HomePage              |
-|  |  /chi-siamo     → ChiSiamoPage          |
-|  |  /servizi       → ServiziPage           |
-|  |  /contatti      → ContattiPage          |
-|  |  /login         → LoginPage             |
-|  |  /area-riservata→ AreaRiservataPage 🔒  |
-|  |  *              → NotFoundPage          |
-|  +----------------------------------------+
-|                      |
-|                       v
-|  +----------------------------------------+
-|  |          API Backend (esterno)          |
-|  |  - POST /api/contatti (form email)      |
-|  |  - POST /api/login (JWT auth)           |
-|  |  - GET  /api/news (articoli)            |
-|  +----------------------------------------+
-+-------------------------------------------+
++------------------------------------------------+
+|         React SPA (CRA, porta 3000)            |
+|                                                |
+|  +----------+   +--------------------------+   |
+|  | Navbar   |   |   React Router v7        |   |
+|  | (sticky) |   |   (vedi §4 route)        |   |
+|  +----------+   +--------------------------+   |
+|  +--------------------------------------------+|
+|  | Footer (sempre presente)                   ||
+|  +--------------------------------------------+|
++----------------------+-------------------------+
+                       |
+        axios / fetch  |  (HTTP, JSON + multipart)
+                       v
++------------------------------------------------+
+|      Backend REST API (VPS esterno)            |
+|      http://152.228.137.245                    |
+|                                                |
+|   POST   /api/login          → { token, user } |
+|   GET    /api/news           → elenco articoli |
+|   GET    /api/news/:slug     → dettaglio        |
+|   POST   /api/news           → crea   (auth)    |
+|   PUT    /api/news/:id       → modifica (auth)  |
+|   DELETE /api/news/:id       → elimina (auth)   |
+|   /uploads/... (immagini caricate)             |
++------------------------------------------------+
 ```
 
-### Flusso di una richiesta tipica
+> Il backend **non fa parte di questo repository**: è un servizio separato
+> ospitato sul VPS `152.228.137.245`. L'URL è attualmente **hardcoded** nel
+> frontend (vedi §7 e §12).
 
-**Esempio: visitatore invia il form contatti**
-
-```
-1. Visitatore → compila form su /contatti
-2. Frontend   → valida campi (email, campi obbligatori, trim)
-3. Frontend   → verifica reCAPTCHA v3 (invisibile)
-4. Frontend   → POST /api/contatti con dati + token reCAPTCHA
-5. Backend    → verifica token reCAPTCHA con Google
-6. Backend    → rate limiting (max 5 richieste/minuto per IP)
-7. Backend    → ri-valida tutti i campi lato server
-8. Backend    → invia email a info@uipa.it
-9. Backend    → risponde con { success: true }
-10. Frontend  → mostra messaggio di conferma
-```
-
-**Esempio: operatore accede all'area riservata**
+### Flusso: visitatore legge una news
 
 ```
-1. Operatore → inserisce email + password su /login
-2. Frontend  → POST /api/login con credenziali
-3. Backend   → verifica credenziali (bcrypt)
-4. Backend   → genera JWT e lo imposta come httpOnly cookie
-5. Frontend  → redirect a /area-riservata
-6. PrivateRoute → controlla presenza cookie JWT
-7. Frontend  → mostra contenuto protetto
+1. Visitatore  → apre /news
+2. NewsPage    → fetch GET http://152.228.137.245/api/news
+3. Backend     → risponde con l'elenco JSON degli articoli
+4. NewsPage    → filtra per categoria/ricerca lato client e mostra le card
+5. Visitatore  → clicca una card → /news/:slug
+6. NewsDettaglioPage → fetch GET /api/news/:slug + /api/news (per i correlati)
+7. Render      → titolo, immagine, sezioni (testo HTML + immagini posizionate)
+```
+
+### Flusso: operatore pubblica una news
+
+```
+1. Operatore → /login → inserisce email + password
+2. LoginPage → axios POST /api/login → riceve { token, user }
+3. Frontend  → salva token e user in localStorage (uipa_token / uipa_user)
+4. Redirect  → /admin
+5. AdminPage → controlla il token in localStorage (altrimenti redirect /login)
+6. FormNews  → compila titolo, categoria, slug, estratto, immagine e sezioni
+7. Frontend  → axios POST /api/news (multipart/form-data) con header Bearer
+8. Backend   → salva su DB, immagini in /uploads, risponde
+9. AdminPage → ricarica l'elenco news
 ```
 
 ---
@@ -136,218 +151,293 @@ Sito web istituzionale per la sede provinciale di Caserta di UIPA
 ## 3. Struttura del Progetto
 
 ```
-uipa-caserta/
+uipanazionale-caserta/
 │
 ├── public/
-│   └── index.html                  ← HTML base (non modificare)
+│   ├── index.html
+│   ├── favicon.ico, logo192.png, logo512.png
+│   ├── manifest.json
+│   └── robots.txt
 │
 ├── src/
+│   ├── assets/                    ← immagini hero per pagina, loghi partner, PDF, logo.png, hero.mp4
 │   │
-│   ├── assets/                     ← file statici
-│   │   ├── logo.png                ← logo UIPA ufficiale
-│   │   └── hero.mp4                ← video hero (campi agricoli, loop)
+│   ├── components/                ← componenti riutilizzabili
+│   │   ├── TopBar/                ← TopBar.jsx + .css
+│   │   ├── Navbar/                ← Navbar.jsx + .css  (menu sticky con dropdown)
+│   │   ├── Footer/                ← Footer.jsx + .css
+│   │   └── PageTemplate/          ← PageTemplate.jsx + .css  (header + container per pagine interne)
 │   │
-│   ├── components/                 ← componenti riutilizzabili
-│   │   ├── TopBar/
-│   │   │   ├── TopBar.jsx          ← barra verde scura superiore
-│   │   │   └── TopBar.css
-│   │   ├── Navbar/
-│   │   │   ├── Navbar.jsx          ← menu sticky con dropdown
-│   │   │   └── Navbar.css
-│   │   └── Footer/
-│   │       ├── Footer.jsx          ← footer 4 colonne
-│   │       └── Footer.css
+│   ├── data/                      ← dati statici (JS)
+│   │   ├── caf.js                 ← servizi CAF (usato da ServiziCafPage)
+│   │   ├── patronato.js           ← servizi patronato (usato da ServiziPatronatoPage)
+│   │   └── news.js                ← ⚠️ dati news statici LEGACY, non più importati (news arrivano dall'API)
 │   │
-│   ├── pages/                      ← una cartella per ogni pagina
-│   │   ├── Home/
-│   │   │   ├── HomePage.jsx        ← hero video + servizi + news + partners
-│   │   │   └── HomePage.css
-│   │   ├── ChiSiamo/
-│   │   │   ├── ChiSiamoPage.jsx    ← presentazione + organi sociali
-│   │   │   └── ChiSiamoPage.css
-│   │   ├── Servizi/
-│   │   │   ├── ServiziPage.jsx     ← griglia 8 servizi (interni + esterni)
-│   │   │   └── ServiziPage.css
-│   │   ├── ServiziPatronato/
-│   │   │   └── ServiziPatronatoPage.jsx
-│   │   ├── ServiziCaf/
-│   │   │   └── ServiziCafPage.jsx
-│   │   ├── Convenzioni/
-│   │   │   └── ConvenzioniPage.jsx
-│   │   ├── ApriUnaSede/
-│   │   │   └── ApriUnaSedePage.jsx
-│   │   ├── Ccnl/
-│   │   │   └── CcnlPage.jsx
-│   │   ├── Tesseramento/
-│   │   │   └── TesseramentoPage.jsx
-│   │   ├── Sedi/
-│   │   │   └── SediPage.jsx
-│   │   ├── Contatti/
-│   │   │   ├── ContattiPage.jsx    ← form contatti + mappa Google
-│   │   │   └── ContattiPage.css
-│   │   ├── DoveSiamo/
-│   │   │   └── DoveSiamoPage.jsx
-│   │   ├── Login/
-│   │   │   ├── LoginPage.jsx       ← form login area riservata
-│   │   │   └── LoginPage.css
-│   │   ├── AreaRiservata/
-│   │   │   ├── AreaRiservataPage.jsx  ← 🔒 protetta da PrivateRoute
-│   │   │   └── AreaRiservataPage.css
-│   │   └── NotFound/
-│   │       └── NotFoundPage.jsx    ← pagina 404
+│   ├── pages/
+│   │   ├── Home/                  ← HomePage (hero + servizi + ultime 3 news da API + partner)
+│   │   ├── ChiSiamo/              ← ChiSiamoPage, PresidentePage, GiuntaEsecutivaPage
+│   │   ├── Servizi/               ← ServiziPage, ServiziPatronatoPage, ServiziCafPage
+│   │   ├── Convenzioni/           ← ConvenzioniPage
+│   │   ├── ApriUnaSede/           ← ApriUnaSedePage
+│   │   ├── Ccnl/                  ← CcnlPage
+│   │   ├── Tesseramento/          ← TesseramentoPage
+│   │   ├── Sedi/                  ← SediPage
+│   │   ├── Contatti/              ← ContattiPage (form mock) + DoveSiamo/DoveSiamoPage
+│   │   ├── DoveSiamo/             ← DoveSiamoPage
+│   │   ├── News/                  ← NewsPage (elenco+filtri), NewsDettaglioPage (dettaglio+sidebar)
+│   │   ├── Login/                 ← LoginPage
+│   │   ├── Admin/                 ← AdminPage (CMS: editor, upload, CRUD news)
+│   │   └── NotFound/              ← NotFoundPage (404)
 │   │
-│   ├── App.js                      ← routing principale
-│   ├── App.css                     ← variabili CSS globali
-│   └── index.js                    ← entry point React
+│   ├── App.js                     ← routing principale
+│   ├── App.css                    ← variabili CSS globali + classi condivise
+│   ├── index.js                   ← entry point React (StrictMode)
+│   └── index.css                  ← reset/base
 │
-├── .env.local                      ← variabili d'ambiente (NON su GitHub)
-├── .env.example                    ← template variabili (committare questo)
 ├── .gitignore
 ├── package.json
+├── package-lock.json
 ├── README.md
-└── ARCHITECTURE.md                 ← questo file
+└── Architettetura.md              ← questo file (nota: filename con refuso "Architettetura")
 ```
+
+> ℹ️ Non esistono file `.env` / `.env.example` nel repository: il frontend
+> **non usa variabili d'ambiente** (`REACT_APP_*`). L'URL dell'API è scritto
+> direttamente nei sorgenti.
 
 ---
 
 ## 4. Routing
 
-### Come funziona React Router v6
+Definito in `src/App.js` con React Router v7 (`<Routes>` / `<Route>`).
+`Navbar` e `Footer` sono renderizzati fuori da `<Routes>`, quindi presenti su ogni pagina.
 
-React Router intercetta i cambi di URL **senza ricaricare la pagina** (SPA).
-Quando l'utente clicca un link → l'URL cambia → React mostra il componente corrispondente.
+| Route                                             | Componente               | Tipo         | Note                                      |
+| ------------------------------------------------- | ------------------------ | ------------ | ----------------------------------------- |
+| `/`                                               | `HomePage`               | Pubblica     | Hero, servizi, ultime 3 news da API       |
+| `/chi-siamo`                                      | `ChiSiamoPage`           | Pubblica     |                                           |
+| `/chi-siamo/presidente`                           | `PresidentePage`         | Pubblica     |                                           |
+| `/chi-siamo/giunta-esecutiva`                     | `GiuntaEsecutivaPage`    | Pubblica     |                                           |
+| `/chi-siamo/direzione-nazionale`                  | `ComingSoon`             | Pubblica     | Placeholder "in costruzione"              |
+| `/servizi`                                        | `ServiziPage`            | Pubblica     | Mix link interni/esterni                  |
+| `/servizi/patronato`                              | `ServiziPatronatoPage`   | Pubblica     | Dati da `data/patronato.js`               |
+| `/servizi/patronato/:categoriaId`                 | `ServiziPatronatoPage`   | Pubblica     | Parametro categoria                       |
+| `/servizi/patronato/:categoriaId/:servizioId`     | `ServiziPatronatoPage`   | Pubblica     | Parametro servizio                        |
+| `/servizi/caf`                                    | `ServiziCafPage`         | Pubblica     | Dati da `data/caf.js`                      |
+| `/servizi/caf/:servizioId`                        | `ServiziCafPage`         | Pubblica     | Parametro servizio                        |
+| `/convenzioni`                                    | `ConvenzioniPage`        | Pubblica     |                                           |
+| `/apri-una-sede`                                  | `ApriUnaSedePage`        | Pubblica     |                                           |
+| `/ccnl`                                           | `CcnlPage`               | Pubblica     |                                           |
+| `/tesseramento`                                   | `TesseramentoPage`       | Pubblica     |                                           |
+| `/sedi`                                           | `SediPage`               | Pubblica     |                                           |
+| `/contatti`                                       | `ContattiPage`           | Pubblica     | Form **mock** (non invia al backend)      |
+| `/contatti/dove-siamo`                            | `DoveSiamoPage`          | Pubblica     |                                           |
+| `/news`                                           | `NewsPage`               | Pubblica     | Elenco + filtri categoria + ricerca (API) |
+| `/news/:slug`                                     | `NewsDettaglioPage`      | Pubblica     | Dettaglio + correlati + sidebar (API)     |
+| `/login`                                          | `LoginPage`              | Pubblica     | Login area amministrativa                 |
+| `/admin`                                          | `AdminPage`              | 🔒 Protetta  | Redirect a `/login` se manca il token     |
+| `*`                                               | `NotFoundPage`           | —            | 404                                       |
 
-### Tutte le route
+> ⚠️ **Non esiste** un componente `PrivateRoute` né una route `/area-riservata`
+> o `/privacy`. La protezione di `/admin` è un semplice controllo `useEffect`
+> dentro `AdminPage` che reindirizza a `/login` se `localStorage.uipa_token`
+> è assente.
 
-| Route                            | Componente               | Tipo        | Note                      |
-| -------------------------------- | ------------------------ | ----------- | ------------------------- |
-| `/`                              | `HomePage`               | Pubblica    | Video hero, servizi, news |
-| `/chi-siamo`                     | `ChiSiamoPage`           | Pubblica    |                           |
-| `/chi-siamo/presidente`          | `PresidentePage`         | Pubblica    |                           |
-| `/chi-siamo/giunta-esecutiva`    | `GiuntaEsecutivaPage`    | Pubblica    |                           |
-| `/chi-siamo/direzione-nazionale` | `DirezioneNazionalePage` | Pubblica    |                           |
-| `/servizi`                       | `ServiziPage`            | Pubblica    | Mix link interni/esterni  |
-| `/servizi/patronato`             | `ServiziPatronatoPage`   | Pubblica    |                           |
-| `/servizi/caf`                   | `ServiziCafPage`         | Pubblica    |                           |
-| `/convenzioni`                   | `ConvenzioniPage`        | Pubblica    |                           |
-| `/apri-una-sede`                 | `ApriUnaSedePage`        | Pubblica    |                           |
-| `/ccnl`                          | `CcnlPage`               | Pubblica    |                           |
-| `/tesseramento`                  | `TesseramentoPage`       | Pubblica    |                           |
-| `/sedi`                          | `SediPage`               | Pubblica    |                           |
-| `/contatti`                      | `ContattiPage`           | Pubblica    | Form + mappa              |
-| `/contatti/dove-siamo`           | `DoveSiamoPage`          | Pubblica    |                           |
-| `/login`                         | `LoginPage`              | Pubblica    |                           |
-| `/area-riservata`                | `AreaRiservataPage`      | 🔒 Protetta | PrivateRoute              |
-| `/privacy`                       | `PrivacyPage`            | Pubblica    | GDPR obbligatorio         |
-| `*`                              | `NotFoundPage`           | —           | 404                       |
+### Link esterni (nuova scheda)
 
-### PrivateRoute
+Gestiti da siti esterni, aperti con `target="_blank" rel="noopener noreferrer"`:
 
-```jsx
-const PrivateRoute = ({ children }) => {
-  const isAuthenticated = /* controlla JWT cookie */;
-  return isAuthenticated ? children : <Navigate to="/login" />;
-};
-
-// Utilizzo in App.js
-<Route path="/area-riservata" element={
-  <PrivateRoute>
-    <AreaRiservataPage />
-  </PrivateRoute>
-} />
-```
-
-### Link esterni (si aprono in nuova scheda)
-
-I seguenti servizi sono gestiti da siti esterni — non sono pagine React:
-
-| Voce menu                  | URL esterno                                         |
+| Voce                       | URL                                                 |
 | -------------------------- | --------------------------------------------------- |
 | Intermediazione del lavoro | https://www.uidd.it/uidd/intermediazione-al-lavoro/ |
-| Associazione CèART         | https://www.associazioneceart.it/                   |
+| Associazione CeART         | https://www.associazioneceart.it/                   |
 | Formazione professionale   | https://www.usacademy.it/                           |
 | Lavoro domestico           | https://www.uidd.it/uidd/lavoro-domestico/          |
 | CAA                        | https://www.caauipa.it/                             |
 | Gestionale                 | http://gestionale.uipa.it                           |
 | Web Mail                   | https://webmail.aruba.it/                           |
-
-> Tutti i link esterni usano `target="_blank" rel="noopener noreferrer"`
+| Facebook                   | https://www.facebook.com/uipaitalia/                |
 
 ---
 
 ## 5. Componenti
 
-### TopBar
+### TopBar (`components/TopBar/`)
+Barra superiore con link utility (Gestionale, Area Riservata/Login, Web Mail, Facebook).
 
-Barra verde scura sempre visibile in cima alla pagina.
+### Navbar (`components/Navbar/`)
+Menu di navigazione **sticky** con:
+- Logo UIPA cliccabile → home
+- Voci con **dropdown** al hover (Chi siamo, Servizi, Contatti)
+- Voci figlie che possono essere link interni (`path`) o esterni (`url`)
+- **Hamburger menu** su mobile (`menuOpen` in stato)
+- Voce attiva evidenziata con `NavLink` + classe `active`
+- Link utility in coda: Gestionale, 🔒 (Login), Web Mail
 
-| Elemento       | Destinazione                         | Tipo         |
-| -------------- | ------------------------------------ | ------------ |
-| GESTIONALE     | http://gestionale.uipa.it            | Link esterno |
-| AREA RISERVATA | /login                               | Link interno |
-| WEB MAIL       | https://webmail.aruba.it/            | Link esterno |
-| Facebook       | https://www.facebook.com/uipaitalia/ | Link esterno |
+La struttura del menu è definita nell'array `menuItems` in `Navbar.jsx`.
 
-### Navbar
+### Footer (`components/Footer/`)
+Footer informativo a più colonne (descrizione, menu, servizi, contatti + Facebook).
 
-Menu di navigazione sticky (rimane in cima durante lo scroll).
-
-- Logo UIPA cliccabile → torna alla home
-- Menu orizzontale con dropdown al hover
-- Hamburger menu su mobile (< 900px)
-- Voce attiva evidenziata con `className="active"`
-
-### Footer
-
-Footer a 4 colonne:
-
-1. Descrizione UIPA
-2. Menu principale
-3. Lista servizi
-4. Contatti sede di Caserta + Facebook
+### PageTemplate (`components/PageTemplate/`)
+Wrapper condiviso dalle pagine interne. Props: `titolo`, `sottotitolo`, `immagine`, `children`.
+Renderizza un header con overlay (immagine di sfondo opzionale) + un `container` per il contenuto.
+Usato da NewsPage, NewsDettaglioPage e altre pagine interne.
 
 ---
 
 ## 6. Pagine
 
-### HomePage
+### HomePage (`pages/Home/`)
+- **Hero**: overlay con titolo istituzionale, sottotitolo, 2 CTA (Chi siamo / Contattaci) e statistiche (40+ sedi, 30+ anni, 7 servizi)
+- **Servizi**: griglia di 8 card (array `servizi`, mix link interni/esterni)
+- **Ultime news**: `fetch` delle news dall'API, mostra le **prime 3**
+- **Partner**: loghi istituzionali (MASAF, AGEA, Min. Lavoro, INPS, INAIL, Agenzia Entrate)
 
-La pagina principale è composta da queste sezioni in ordine:
+### NewsPage (`pages/News/NewsPage.jsx`)
+- Carica l'elenco news con `fetch(GET /api/news)`
+- **Ricerca** testuale (titolo/estratto) + **filtri per categoria** (client-side)
+- Card con immagine, categoria, titolo, estratto, data (formattata `it-IT`)
+- Banner "Seguici su Facebook"
 
-| Sezione           | Descrizione                                                           |
-| ----------------- | --------------------------------------------------------------------- |
-| Hero              | Video MP4 in loop (campi agricoli) con overlay verde + titolo + 2 CTA |
-| Servizi           | Griglia 4 colonne con 8 card servizi (link interni ed esterni)        |
-| News              | Ultime notizie dal blog con titolo e data                             |
-| Rete sociale      | Link ai partner (UIDD, ecc.)                                          |
-| Collabora con noi | 3 CTA: CAF/Patronato, Sede sindacale, Sede CAA                        |
-| Partners          | Loghi: MASAF, AGEA, Min. Lavoro, INPS, INAIL, Agenzia Entrate         |
+### NewsDettaglioPage (`pages/News/NewsDettaglioPage.jsx`)
+- Carica l'articolo con `fetch(GET /api/news/:slug)` + tutte le news per i **correlati** (stessa categoria)
+- Render dell'immagine principale, estratto e **sezioni** dinamiche
+- Ogni sezione: titolo opzionale, testo **HTML** (`dangerouslySetInnerHTML`), immagine con **posizione** (`sopra`/`sotto`/`sinistra`/`destra`)
+- **Sidebar**: link ai servizi (UNICAF, CAA, Patronato, US Academy), articoli correlati, box contatti/telefono
 
-### ContattiPage
+### ContattiPage (`pages/Contatti/`)
+- Info sede nazionale (Roma) e sede Caserta + email `mailto:info@uipa.it`
+- Form con campi (nome, email, ecc.) → **`handleSubmit` fa solo `setInviato(true)`**
+- ⚠️ **Il form NON invia dati al backend** (nessun `fetch`/`axios`): è un mock che mostra un messaggio di conferma
 
-- Informazioni sede nazionale (Roma) e sede Caserta
-- Mappa Google Maps embed (Via Arena 37, Caserta)
-- Form contatti con campi: nome, email, telefono, oggetto (select), messaggio
-- Checkbox consenso privacy (obbligatorio)
-- Messaggio di conferma dopo invio
+### Servizi
+- **ServiziPage**: griglia servizi (interni + link esterni)
+- **ServiziPatronatoPage**: renderizza i servizi da `data/patronato.js`, con routing per categoria/servizio
+- **ServiziCafPage**: renderizza i servizi da `data/caf.js`, con routing per servizio
 
-### LoginPage (da sviluppare)
-
-- Form email + password
-- Validazione frontend
-- POST al backend → JWT in httpOnly cookie
-- Redirect a `/area-riservata` dopo login
+### Altre pagine
+ChiSiamoPage, PresidentePage, GiuntaEsecutivaPage, ConvenzioniPage, ApriUnaSedePage,
+CcnlPage, TesseramentoPage, SediPage, DoveSiamoPage, NotFoundPage — pagine statiche di contenuto.
 
 ---
 
-## 7. Stili CSS
+## 7. Backend API e modello dati News
 
-### Variabili globali (App.css)
+> Backend **esterno**, non incluso in questo repo. URL base attualmente hardcoded:
+> `http://152.228.137.245` (ripetuto in `HomePage`, `NewsPage`, `NewsDettaglioPage`,
+> `LoginPage`, `AdminPage`).
+
+### Endpoint
+
+| Metodo   | Endpoint            | Auth   | Body                    | Risposta            |
+| -------- | ------------------- | ------ | ----------------------- | ------------------- |
+| `POST`   | `/api/login`        | No     | `{ email, password }`   | `{ token, user }`   |
+| `GET`    | `/api/news`         | No     | —                       | `News[]`            |
+| `GET`    | `/api/news/:slug`   | No     | —                       | `News`              |
+| `POST`   | `/api/news`         | Bearer | `multipart/form-data`   | news creata         |
+| `PUT`    | `/api/news/:id`     | Bearer | `multipart/form-data`   | news aggiornata     |
+| `DELETE` | `/api/news/:id`     | Bearer | —                       | esito eliminazione  |
+
+Le immagini caricate sono servite dal backend come percorsi relativi
+(es. `/uploads/...`) e nel frontend vengono mostrate concatenando `${API_URL}${immagine}`.
+
+### Modello dati News (come usato dal frontend)
+
+```jsonc
+{
+  "id": 12,
+  "titolo": "Titolo articolo",
+  "slug": "titolo-articolo",          // usato nell'URL /news/:slug
+  "categoria": "Fisco",               // vedi elenco categorie sotto
+  "estratto": "Breve riassunto...",
+  "immagine": "/uploads/img.jpg",     // percorso relativo al backend (opzionale)
+  "data": "2026-06-30T10:00:00Z",     // formattata con toLocaleDateString('it-IT')
+  "contenuto": [                       // array di SEZIONI
+    {
+      "titolo": "Titolo sezione",     // opzionale
+      "testo": "<p>HTML dal rich text editor</p>",
+      "immagine": "/uploads/sez.jpg", // opzionale
+      "immaginePos": "sopra"          // "sopra" | "sotto" | "sinistra" | "destra"
+    }
+  ]
+}
+```
+
+**Categorie previste**: Fisco, Lavoro, Pensioni, Famiglia, Normativa, Agricoltura,
+Immobili e Terreni, Disabilita.
+
+### Invio dal form Admin (multipart)
+
+Il `FormNews` costruisce un `FormData` con:
+- campi testo: `titolo`, `categoria`, `estratto`, `slug`
+- `contenuto`: JSON string dell'array sezioni (senza i file immagine)
+- `immagine`: file immagine principale (se presente)
+- `immagine_sezione_{idx}`: file immagine per la sezione all'indice `idx`
+
+---
+
+## 8. Pannello Admin e Autenticazione
+
+### Login (`pages/Login/LoginPage.jsx`)
+1. Form email + password
+2. `axios POST /api/login`
+3. Salva in **`localStorage`**: `uipa_token` (JWT) e `uipa_user` (JSON utente)
+4. Redirect a `/admin`
+
+### AdminPage (`pages/Admin/AdminPage.jsx`)
+- All'avvio (`useEffect`) verifica `localStorage.uipa_token`; se assente → `/login`
+- Header con email utente e pulsante **Esci** (rimuove token/user da localStorage)
+- **Elenco news** con immagine, categoria, titolo, estratto e azioni Modifica/Elimina
+- **FormNews** (creazione/modifica):
+  - campi titolo/categoria/slug (slug autogenerato dal titolo in creazione)/estratto
+  - upload immagine principale con preview
+  - **sezioni** dinamiche (aggiungi/rimuovi), ognuna con titolo, editor testo, immagine e posizione
+  - **anteprima live** dell'articolo accanto al form
+- Le richieste protette inviano l'header `Authorization: Bearer ${token}`
+
+### EditorTesto (rich text)
+Editor custom dentro `AdminPage.jsx`: un `div contentEditable` con toolbar che usa
+`document.execCommand` (bold, italic, underline, H2/H3/P, liste, allineamenti, clear).
+Produce **HTML** salvato nel campo `testo` della sezione e reso lato pubblico con
+`dangerouslySetInnerHTML`.
+
+> Nota: `document.execCommand` è deprecato ma tuttora funzionante in tutti i browser;
+> è una scelta pragmatica che evita dipendenze esterne.
+
+### Modello di autenticazione — importante
+
+- Il token JWT è in **`localStorage`**, quindi **accessibile da JavaScript**
+  (a differenza di un cookie httpOnly). È esposto in caso di XSS.
+- La protezione della route admin è **solo lato client** (redirect): la vera
+  sicurezza è garantita dal backend, che deve validare il Bearer token su ogni
+  endpoint protetto.
+
+---
+
+## 9. Dati statici
+
+Cartella `src/data/` (moduli JS esportati di default):
+
+| File           | Contenuto                              | Usato da                    |
+| -------------- | -------------------------------------- | --------------------------- |
+| `caf.js`       | Descrizione + elenco servizi CAF       | `ServiziCafPage`            |
+| `patronato.js` | Elenco servizi di patronato            | `ServiziPatronatoPage`      |
+| `news.js`      | Vecchi articoli statici (**legacy**)   | ⚠️ **non importato** — le news arrivano dall'API |
+
+`data/news.js` è residuo di quando le news erano statiche: può essere rimosso o
+tenuto come riferimento, ma non è collegato a nessuna pagina.
+
+---
+
+## 10. Stili CSS
+
+### Variabili globali (`App.css`)
 
 ```css
 :root {
-  --verde: #2e6b35; /* colore primario */
-  --verde-scuro: #1e4a23; /* hover e header */
+  --verde: #2e6b35;        /* colore primario */
+  --verde-scuro: #1e4a23;  /* hover e header */
   --verde-chiaro: #4a9c54; /* accenti */
   --bianco: #ffffff;
   --grigio: #f4f4f4;
@@ -359,204 +449,149 @@ La pagina principale è composta da queste sezioni in ordine:
 ```
 
 ### Regola fondamentale
+Ogni componente/pagina ha il proprio file CSS dedicato, importato nel rispettivo
+`.jsx`. Gli stili globali/condivisi (variabili, `.container`, `.section`, `.btn`)
+stanno in `App.css`; il reset di base in `index.css`.
 
-Ogni componente ha il suo file CSS dedicato importato nel `.jsx`.
-Non scrivere stili di un componente nel CSS di un altro.
-
-### Breakpoint responsive
-
-| Breakpoint | Comportamento                     |
-| ---------- | --------------------------------- |
-| < 600px    | Griglia 1 colonna, testo ridotto  |
-| < 900px    | Griglia 2 colonne, hamburger menu |
-| > 900px    | Layout desktop completo           |
+### Responsive
+Layout desktop-first con media query nei singoli CSS; sotto ~900px la Navbar passa
+all'hamburger menu e le griglie si riducono a 1–2 colonne.
 
 ---
 
-## 8. Sicurezza
+## 11. Sicurezza e stato GDPR
 
-### Autenticazione (Area Riservata)
+### Autenticazione
+- JWT in `localStorage` + header Bearer (vedi §8). **Non** usa cookie httpOnly.
+- Protezione route admin solo lato client → il backend **deve** validare il token.
 
-1. Utente inserisce email + password su `/login`
-2. Frontend → `POST /api/login` con credenziali
-3. Backend → verifica con **bcrypt**
-4. Backend → genera **JWT** e lo imposta come **httpOnly cookie**
-5. Frontend → PrivateRoute controlla il cookie ad ogni navigazione
-
-> Il token JWT in httpOnly cookie non è accessibile da JavaScript
-> → protetto da attacchi XSS
-
-### Form Contatti (anti-spam)
-
-| Misura               | Descrizione                                               |
-| -------------------- | --------------------------------------------------------- |
-| Validazione frontend | Campi obbligatori, formato email, trim spazi              |
-| reCAPTCHA v3         | Verifica invisibile che l'utente non sia un bot           |
-| Validazione backend  | Il server ri-valida tutto (mai fidarsi solo del frontend) |
-| Rate limiting        | Max 5 richieste per IP al minuto                          |
-
-### XSS (Cross-Site Scripting)
-
-React sanitizza automaticamente il JSX. Regola da seguire:
-
-```jsx
-// ❌ MAI — esegue HTML non sicuro
-<div dangerouslySetInnerHTML={{ __html: contenuto }} />
-
-// ✅ SEMPRE — React lo sanitizza
-<div>{contenuto}</div>
-```
+### XSS
+- Il contenuto delle sezioni news è HTML reso con `dangerouslySetInnerHTML`
+  (necessario per il rich text editor). Il rischio è mitigato dal fatto che il
+  contenuto proviene solo da utenti autenticati dell'area admin, **ma** andrebbe
+  comunque sanificato (es. DOMPurify) prima del render per difesa in profondità.
+- Per il resto React sanifica automaticamente il JSX.
 
 ### Link esterni
+Tutti i link esterni usano `target="_blank" rel="noopener noreferrer"`.
 
-```jsx
-// Tutti i link esterni devono avere rel="noopener noreferrer"
-<a href="https://..." target="_blank" rel="noopener noreferrer">
-```
+### Trasporto
+- L'API è servita in **HTTP semplice** (`http://152.228.137.245`), non HTTPS:
+  credenziali di login e token viaggiano in chiaro. **Da migrare a HTTPS.**
 
-### Variabili d'ambiente
-
-```bash
-# .env.local — NON committare su GitHub (già in .gitignore)
-REACT_APP_API_URL=https://api.uipa.it
-REACT_APP_RECAPTCHA_KEY=xxxxxxxxxxxxxx
-```
-
-### Audit dipendenze
-
-```bash
-npm audit          # mostra vulnerabilità
-npm audit fix      # risolve quelle safe automaticamente
-```
-
----
-
-## 9. GDPR e Privacy
-
-Il form contatti raccoglie dati personali (nome, email, telefono).
-Per essere conformi al **GDPR (Reg. UE 679/2016)** e alla normativa italiana:
+### Stato GDPR
 
 | Elemento                                    | Stato            |
 | ------------------------------------------- | ---------------- |
-| Checkbox consenso nel form                  | ✅ Implementato  |
-| Pagina `/privacy` con Privacy Policy        | ⬜ Da sviluppare |
-| Cookie Policy                               | ⬜ Da sviluppare |
-| Banner consenso cookie al primo accesso     | ⬜ Da sviluppare |
-| Indicazione titolare del trattamento (UIPA) | ⬜ Da inserire   |
+| Pagina Privacy Policy (`/privacy`)          | ❌ Assente       |
+| Cookie Policy                               | ❌ Assente       |
+| Banner consenso cookie                      | ❌ Assente       |
+| Consenso privacy nel form contatti          | ⚠️ Da verificare (form comunque non invia dati) |
+| Indicazione titolare del trattamento        | ❌ Da inserire   |
 
-> ⚠️ Senza Privacy Policy e banner cookie il sito non è conforme alla legge.
-> Il Garante Privacy può comminare sanzioni fino al 4% del fatturato annuo.
-
----
-
-## 10. Flusso di lavoro Git
-
-### Struttura branch
-
-```
-main          ← versione stabile (non si tocca direttamente)
-  └── develop ← sviluppo attivo
-        ├── feature/navbar
-        ├── feature/homepage
-        ├── feature/contatti
-        └── feature/login
-```
-
-### Messaggi di commit
-
-| Prefisso | Quando usarlo              |
-| -------- | -------------------------- |
-| `feat:`  | nuova funzionalità         |
-| `fix:`   | risolvo un bug             |
-| `style:` | modifiche CSS              |
-| `chore:` | configurazione, dipendenze |
-| `docs:`  | documentazione             |
-
-**Esempi:**
-
-```
-feat: add Navbar with dropdown
-fix: mobile menu not closing on link click
-style: update hero section overlay opacity
-docs: update architecture documentation
-```
-
-### Come aggiungere una nuova pagina
-
-1. Crea cartella `src/pages/NomePagina/`
-2. Crea `NomePaginaPage.jsx` e `NomePaginaPage.css`
-3. Importa la pagina in `App.js`
-4. Aggiungi la `<Route>` in `App.js`
-5. Aggiungi il link nella `Navbar` se necessario
-6. Commit: `feat: add NomePagina page`
+> ⚠️ Senza Privacy/Cookie Policy e banner il sito non è pienamente conforme al
+> GDPR (Reg. UE 2016/679).
 
 ---
 
-## 11. Deploy e Infrastruttura
+## 12. Stato attuale, criticità e TODO
 
-### Schema infrastruttura (da definire)
+### ✅ Implementato e funzionante
+- Navigazione completa (Navbar/Footer/PageTemplate) e tutte le pagine di contenuto
+- **CMS News dinamico**: elenco con filtri e ricerca, dettaglio con sezioni e correlati
+- **Pannello Admin** con login, CRUD news, rich text editor, upload immagini, sezioni con posizionamento immagine e anteprima live
+- Integrazione con il backend REST per news e autenticazione
 
+### ⚠️ Criticità / debito tecnico
+| Tema | Dettaglio | Azione consigliata |
+| ---- | --------- | ------------------ |
+| URL API hardcoded | `http://152.228.137.245` ripetuto in 5–6 file | Centralizzare in un modulo (es. `src/config.js` o istanza axios) e usare `.env` (`REACT_APP_API_URL`) |
+| API in HTTP | Nessun TLS | Migrare il backend a HTTPS |
+| JWT in localStorage | Esposto a XSS | Valutare cookie httpOnly o almeno sanificare l'HTML delle news |
+| Form contatti mock | `handleSubmit` non invia nulla | Collegare a un endpoint backend (o servizio email) |
+| `dangerouslySetInnerHTML` | HTML non sanificato | Integrare DOMPurify |
+| `data/news.js` legacy | Non più usato | Rimuovere o archiviare |
+| GDPR | Privacy/cookie mancanti | Aggiungere pagina privacy + banner cookie |
+| Editor deprecato | `document.execCommand` | Ok per ora; valutare libreria (es. Tiptap) in futuro |
+
+### 🔜 Da sviluppare
+- Pagina/i istituzionali placeholder (es. `direzione-nazionale`)
+- Invio reale del form contatti
+- Conformità GDPR
+
+---
+
+## 13. Sviluppo locale, build e deploy
+
+### Prerequisiti
+- Node.js 16+ (consigliato 18/20), npm 8+, Git
+
+### Avvio
+```bash
+npm install        # installa le dipendenze
+npm start          # avvia il dev server su http://localhost:3000
+# se la porta 3000 è occupata:
+#   PORT=3001 npm start   → http://localhost:3001
 ```
-        Internet
-           |
-           v
-   +---------------+
-   | DNS           |
-   | uipa.it       |
-   +-------+-------+
-           |
-           v
-   +---------------+
-   | Hosting       |     Opzioni: Netlify / Vercel / VPS
-   | HTTPS         |     Certificato SSL automatico
-   +-------+-------+
-           |
-           v
-   +---------------+
-   | React Build   |     npm run build → cartella /build
-   | (statico)     |     File statici serviti dal CDN
-   +---------------+
-```
+
+> **Non** esiste `npm run dev`: il progetto è Create React App, il comando è `npm start`.
+
+### Script disponibili (`package.json`)
+| Script          | Descrizione                          |
+| --------------- | ------------------------------------ |
+| `npm start`     | Dev server con hot reload            |
+| `npm run build` | Build di produzione in `/build`      |
+| `npm test`      | Test con Testing Library/Jest        |
+| `npm run eject` | Eject CRA (irreversibile, da evitare)|
+
+> Nota: **non** esiste uno script `lint` dedicato; l'ESLint di CRA gira comunque
+> durante `start`/`build`.
 
 ### Build produzione
-
 ```bash
-npm run build
+npm run build      # genera /build con file statici ottimizzati
 ```
+Il frontend è un sito **statico**: può essere servito da qualsiasi host/CDN
+(Netlify, Vercel, VPS, Nginx). Ricordarsi il fallback SPA (tutte le route → `index.html`).
+Prima del deploy in produzione: centralizzare l'URL API e passare a HTTPS.
 
-Genera la cartella `/build` con i file ottimizzati pronti per il deploy.
+---
 
-### Opzioni di deploy
+## 14. Flusso di lavoro Git
 
-| Piattaforma | Pro                                          | Contro                          |
-| ----------- | -------------------------------------------- | ------------------------------- |
-| **Netlify** | Gratuito, deploy automatico da GitHub, HTTPS | Limitazioni su backend          |
-| **Vercel**  | Gratuito, velocissimo, HTTPS                 | Limitazioni su backend          |
-| **VPS**     | Controllo totale, backend incluso            | Richiede configurazione manuale |
+- **Repository**: https://github.com/UIPANAZIONALE/uipanazionale-caserta
+- **Branch principale**: `main`
 
-### Checklist pre-produzione
+### Convenzioni commit
+| Prefisso | Uso                        |
+| -------- | -------------------------- |
+| `feat:`  | nuova funzionalità         |
+| `fix:`   | correzione bug             |
+| `style:` | modifiche CSS/stile        |
+| `chore:` | config, dipendenze         |
+| `docs:`  | documentazione             |
 
-- [ ] `npm run build` senza errori
-- [ ] `npm audit` — nessuna vulnerabilità critica
-- [ ] Variabili d'ambiente produzione configurate
-- [ ] HTTPS attivo
-- [ ] Privacy Policy e banner cookie implementati
-- [ ] Form contatti testato con email reale
-- [ ] reCAPTCHA configurato con dominio produzione
-- [ ] Test su mobile (Chrome DevTools)
-- [ ] Test su Safari (iOS)
+### Aggiungere una nuova pagina
+1. Crea `src/pages/NomePagina/NomePaginaPage.jsx` (+ `.css`)
+2. Importala in `App.js` e aggiungi la `<Route>`
+3. Aggiungi il link nella `Navbar` se serve
+4. Commit: `feat: add NomePagina page`
 
-### Riepilogo per lo sviluppatore
+---
 
-**Dove cercare le cose**
+## 15. Riepilogo per lo sviluppatore
 
-| Cerco...                  | Guardo...                             |
-| ------------------------- | ------------------------------------- |
-| Struttura menu e link     | `src/components/Navbar/Navbar.jsx`    |
-| Variabili colori CSS      | `src/App.css`                         |
-| Tutte le route            | `src/App.js`                          |
-| Contenuto homepage        | `src/pages/Home/HomePage.jsx`         |
-| Form contatti             | `src/pages/Contatti/ContattiPage.jsx` |
-| Componente riutilizzabile | `src/components/`                     |
-| Pagina specifica          | `src/pages/NomePagina/`               |
-| Variabili d'ambiente      | `.env.example`                        |
+| Cerco...                       | Guardo...                                        |
+| ------------------------------ | ------------------------------------------------ |
+| Tutte le route                 | `src/App.js`                                      |
+| Struttura menu e link          | `src/components/Navbar/Navbar.jsx`                |
+| Variabili colori/CSS globali   | `src/App.css`                                     |
+| URL del backend (API)          | costante `API_URL` in Admin/Login/News + HomePage |
+| Endpoint e modello News        | §7 di questo documento                            |
+| Login / gestione token         | `src/pages/Login/LoginPage.jsx`                   |
+| CMS / editor / upload news     | `src/pages/Admin/AdminPage.jsx`                   |
+| Rendering news pubbliche       | `src/pages/News/`                                 |
+| Servizi CAF / Patronato (dati) | `src/data/caf.js`, `src/data/patronato.js`        |
+| Wrapper pagine interne         | `src/components/PageTemplate/PageTemplate.jsx`    |
+</content>
+</invoke>

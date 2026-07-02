@@ -1,29 +1,27 @@
-<<<<<<< HEAD
-# uipanazionale-caserta
-Refactoring sito UIPA Caserta in React
-=======
 # UIPA Caserta — Sito Web
 
-Refactoring del sito ufficiale UIPA sede di Caserta.
-Sito vetrina multi-pagina con area riservata, form contatti e gestione news.
+Sito ufficiale UIPA sede di Caserta: sito vetrina multi-pagina con **CMS di news
+dinamico** (backend REST esterno) e **pannello di amministrazione** protetto da login.
 
 ## Stack
 
-- **Frontend**: React 18 (Create React App) — porta 3000
-- **Routing**: React Router DOM v6
+- **Frontend**: React 19 (Create React App / `react-scripts` 5) — porta 3000
+- **Routing**: React Router DOM v7
+- **HTTP**: `axios` (admin/login) + `fetch` nativo (news pubbliche)
 - **Stili**: CSS per componente (nessuna libreria UI esterna)
-- **Auth**: JWT + httpOnly cookie (area riservata)
-- **Form**: validazione frontend + reCAPTCHA v3 (anti-spam)
+- **Backend**: REST API esterna su VPS — `http://152.228.137.245` (repo separato)
+- **Auth**: JWT in `localStorage` + header `Authorization: Bearer`
+- **Editor news**: rich text custom (`contentEditable` + `document.execCommand`)
 
 ## Design
 
-- **Font**: Open Sans (400/600/700/800) via Google Fonts
+- **Font**: Open Sans via Google Fonts
 - **Palette brand**: `#2e6b35` (verde primario) · `#1e4a23` (verde scuro/hover)
-- **UI**: CSS custom con variabili globali in `App.css`
+- **UI**: CSS custom con variabili globali in `src/App.css`
 
 ## Prerequisiti
 
-- Node.js 16+
+- Node.js 16+ (consigliato 18/20)
 - npm 8+
 - Git
 
@@ -34,102 +32,95 @@ Sito vetrina multi-pagina con area riservata, form contatti e gestione news.
 git clone https://github.com/UIPANAZIONALE/uipanazionale-caserta.git
 cd uipanazionale-caserta
 
-# 2. Checkout branch di sviluppo
-git checkout develop
-
-# 3. Installa dipendenze
+# 2. Installa le dipendenze
 npm install
 
-# 4. Copia variabili d'ambiente
-cp .env.example .env.local
-
-# 5. Avvia in sviluppo
+# 3. Avvia in sviluppo
 npm start
 ```
 
-Il sito sarà disponibile su **http://localhost:3000**
+Il sito sarà disponibile su **http://localhost:3000**.
 
-## Variabili d'ambiente
+> ⚠️ Il comando è **`npm start`**, non `npm run dev` (il progetto è Create React App).
+> Se la porta 3000 è occupata: `PORT=3001 npm start` → http://localhost:3001
 
-Creare `.env.local` partendo da `.env.example`.
+## Backend / API
 
-| Variabile                 | Descrizione                         | Obbligatoria |
-| ------------------------- | ----------------------------------- | :----------: |
-| `REACT_APP_API_URL`       | URL del backend API                 |      Sì      |
-| `REACT_APP_RECAPTCHA_KEY` | Chiave pubblica Google reCAPTCHA v3 |      Sì      |
-| `REACT_APP_MAPS_KEY`      | Chiave Google Maps (mappa contatti) |      No      |
+Il frontend consuma un backend REST **esterno** (non incluso in questo repo),
+attualmente all'URL **`http://152.228.137.245`**:
 
-> ⚠️ Non committare mai `.env.local` su GitHub — è già in `.gitignore`
+| Metodo   | Endpoint          | Auth   | Descrizione                    |
+| -------- | ----------------- | ------ | ------------------------------ |
+| `POST`   | `/api/login`      | No     | Login → `{ token, user }`      |
+| `GET`    | `/api/news`       | No     | Elenco articoli                |
+| `GET`    | `/api/news/:slug` | No     | Dettaglio articolo             |
+| `POST`   | `/api/news`       | Bearer | Crea news (multipart + immagini) |
+| `PUT`    | `/api/news/:id`   | Bearer | Modifica news                  |
+| `DELETE` | `/api/news/:id`   | Bearer | Elimina news                   |
 
-## Endpoint utili (sviluppo)
-
-| Servizio       | URL                                  |
-| -------------- | ------------------------------------ |
-| Sito pubblico  | http://localhost:3000                |
-| Area riservata | http://localhost:3000/area-riservata |
-| Login          | http://localhost:3000/login          |
-| Contatti       | http://localhost:3000/contatti       |
+> ℹ️ L'URL dell'API è oggi **hardcoded** nei sorgenti (costante `API_URL` in
+> `HomePage`, `NewsPage`, `NewsDettaglioPage`, `LoginPage`, `AdminPage`).
+> È previsto di centralizzarlo e spostarlo in una variabile d'ambiente
+> (`REACT_APP_API_URL`). Al momento **non** sono usate variabili `.env`.
 
 ## Script disponibili
 
 ```bash
-npm start          # Avvia il server di sviluppo
+npm start          # Avvia il server di sviluppo (hot reload)
 npm run build      # Build produzione (cartella /build)
-npm test           # Avvia i test
-npm run lint       # Controlla errori ESLint
-npm audit          # Controlla vulnerabilità dipendenze
-npm audit fix      # Risolve vulnerabilità automaticamente
+npm test           # Avvia i test (Testing Library / Jest)
+npm run eject      # Eject CRA (irreversibile, da evitare)
 ```
 
 ## Struttura del progetto
 
 ```
-uipa-caserta/
-├── public/
-│   └── index.html
+uipanazionale-caserta/
+├── public/                 ← index.html, favicon, manifest, robots
 └── src/
-    ├── assets/              ← loghi, immagini, video hero
+    ├── assets/             ← loghi, immagini hero per pagina, PDF
     ├── components/
-    │   ├── TopBar/          ← barra superiore (Gestionale, Webmail, Facebook)
-    │   ├── Navbar/          ← navigazione con dropdown + hamburger mobile
-    │   └── Footer/          ← footer 4 colonne
+    │   ├── TopBar/         ← barra superiore (Gestionale, Login, Webmail, Facebook)
+    │   ├── Navbar/         ← navigazione sticky con dropdown + hamburger
+    │   ├── Footer/         ← footer
+    │   └── PageTemplate/   ← header + container per pagine interne
+    ├── data/               ← dati statici: caf.js, patronato.js (news.js = legacy)
     └── pages/
-        ├── Home/            ← homepage con video hero
-        ├── ChiSiamo/        ← presentazione + organi sociali
-        ├── Servizi/         ← griglia servizi
-        ├── Contatti/        ← form contatti + mappa
-        ├── Login/           ← area riservata
-        └── NotFound/        ← pagina 404
+        ├── Home/           ← homepage (hero + servizi + ultime news da API)
+        ├── ChiSiamo/       ← chi siamo, presidente, giunta esecutiva
+        ├── Servizi/        ← servizi, patronato, CAF
+        ├── Convenzioni, ApriUnaSede, Ccnl, Tesseramento, Sedi
+        ├── Contatti/       ← form contatti (mock) + dove siamo
+        ├── News/           ← elenco + dettaglio news (dinamiche da API)
+        ├── Login/          ← login area amministrativa
+        ├── Admin/          ← pannello CMS: CRUD news, editor, upload immagini
+        └── NotFound/       ← pagina 404
 ```
 
-## Branch
+## Funzionalità principali
 
-```
-main          ← versione stabile e definitiva (non si tocca direttamente)
-  └── develop ← sviluppo attivo
-        ├── feature/navbar
-        ├── feature/homepage
-        └── feature/contatti
-```
+- **Sito vetrina** completo (chi siamo, servizi, convenzioni, sedi, contatti…)
+- **News dinamiche**: elenco con ricerca e filtri per categoria, pagina di dettaglio
+  con sezioni (testo HTML + immagini posizionabili) e articoli correlati
+- **Pannello Admin**: login, creazione/modifica/eliminazione news, editor di testo
+  ricco, upload immagine principale e immagini per sezione con posizionamento
+  (sopra/sotto/sinistra/destra) e anteprima live
 
-## GDPR e Privacy
+## Stato attuale / da fare
 
-Il sito raccoglie dati personali tramite il form contatti.
-Sono obbligatori per legge (GDPR 679/2016):
+- ⚠️ **Form contatti**: attualmente **mock** — mostra la conferma ma non invia dati al backend
+- ⚠️ **reCAPTCHA**: non presente
+- ⚠️ **GDPR**: mancano pagina Privacy Policy, Cookie Policy e banner cookie
+- 🔧 **API**: URL hardcoded in HTTP → da centralizzare in `.env` e migrare a HTTPS
+- 🔧 **Sicurezza**: JWT in `localStorage`; valutare sanificazione HTML news (DOMPurify)
 
-- Pagina `/privacy` con Privacy Policy
-- Cookie Policy
-- Banner consenso cookie al primo accesso
+Dettagli completi nell'analisi tecnica: vedi **`Architettetura.md`**.
 
 ## Sito di riferimento
 
 https://www.uipa.it/
 
-## Documentazione tecnica
+## Repository
 
-Vedi `ARCHITECTURE.md` per la documentazione completa dell'architettura.
-
-## Sviluppato da
-
-FabianAndres002 per UIPA Nazionale
->>>>>>> documentazione
+https://github.com/UIPANAZIONALE/uipanazionale-caserta — branch principale: `main`
+</content>
