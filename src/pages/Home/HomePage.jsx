@@ -1,5 +1,6 @@
 import React,{ useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { API_URL } from '../../config';
 import './HomePage.css';
 
 
@@ -20,7 +21,7 @@ const HomePage = () => {
   const [news, setNews] = useState([])
   
 useEffect(() => {
-  fetch('http://152.228.137.245/api/news')
+  fetch(`${API_URL}/api/news`)
     .then(res => res.json())
     .then(data => setNews(data.slice(0, 3)))
     .catch(err => console.error(err));
@@ -149,7 +150,7 @@ useEffect(() => {
        <Link to={`/news/${n.slug}`} key={n.id} className="news-card">
   {n.immagine && (
     <div className="news-card__img">
-      <img src={`http://152.228.137.245${n.immagine}`} alt={n.titolo} />
+      <img src={`${API_URL}${n.immagine}`} alt={n.titolo} />
     </div>
   )}
   <div className="news-card__cat">{n.categoria}</div>

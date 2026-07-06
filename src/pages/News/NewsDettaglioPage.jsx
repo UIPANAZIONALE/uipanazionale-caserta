@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import PageTemplate from '../../components/PageTemplate/PageTemplate';
 import './NewsDettaglioPage.css';
 
-const API_URL = 'http://152.228.137.245';
+import { API_URL } from '../../config';
 
 const NewsDettaglioPage = () => {
   const { slug } = useParams();

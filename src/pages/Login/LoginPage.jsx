@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './LoginPage.css';
 
-const API_URL = 'http://152.228.137.245';
+import { API_URL } from '../../config';
 
 const LoginPage = () => {
   const navigate = useNavigate();

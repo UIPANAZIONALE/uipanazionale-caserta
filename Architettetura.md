@@ -52,7 +52,7 @@ Sito web istituzionale della sede provinciale di Caserta di UIPA
 | HTTP client    | `axios` 1.7.9 (admin/login) + `fetch` nativo (news pubbliche) |
 | Stili          | CSS per componente (nessuna libreria UI: no Bootstrap/MUI) |
 | Font           | Open Sans (via Google Fonts)                            |
-| Backend        | REST API esterna su VPS — `http://152.228.137.245` (repo separato) |
+| Backend        | REST API esterna su VPS — `https://api.uipanazionale.it` (HTTPS dietro Nginx, repo separato) |
 | Autenticazione | JWT in `localStorage` + header `Authorization: Bearer`  |
 | Editor news    | Rich text custom (`contentEditable` + `document.execCommand`) |
 | Test           | Testing Library + Jest (via CRA)                        |
@@ -100,11 +100,11 @@ Comando di avvio: **`npm start`** (il progetto è Create React App: **non** esis
 |  +--------------------------------------------+|
 +----------------------+-------------------------+
                        |
-        axios / fetch  |  (HTTP, JSON + multipart)
+        axios / fetch  |  (HTTPS, JSON + multipart)
                        v
 +------------------------------------------------+
 |      Backend REST API (VPS esterno)            |
-|      http://152.228.137.245                    |
+|      https://api.uipanazionale.it (Nginx)      |
 |                                                |
 |   POST   /api/login          → { token, user } |
 |   GET    /api/news           → elenco articoli |
@@ -117,14 +117,15 @@ Comando di avvio: **`npm start`** (il progetto è Create React App: **non** esis
 ```
 
 > Il backend **non fa parte di questo repository**: è un servizio separato
-> ospitato sul VPS `152.228.137.245`. L'URL è attualmente **hardcoded** nel
-> frontend (vedi §7 e §12).
+> ospitato sul VPS `152.228.137.245` e servito su `https://api.uipanazionale.it`
+> (Nginx + Let's Encrypt). L'URL è centralizzato in [src/config.js](src/config.js)
+> via `REACT_APP_API_URL` (vedi §7). Dettagli infrastruttura: `INFRA-VPS-uipa.md`.
 
 ### Flusso: visitatore legge una news
 
 ```
 1. Visitatore  → apre /news
-2. NewsPage    → fetch GET http://152.228.137.245/api/news
+2. NewsPage    → fetch GET https://api.uipanazionale.it/api/news
 3. Backend     → risponde con l'elenco JSON degli articoli
 4. NewsPage    → filtra per categoria/ricerca lato client e mostra le card
 5. Visitatore  → clicca una card → /news/:slug
@@ -324,9 +325,10 @@ CcnlPage, TesseramentoPage, SediPage, DoveSiamoPage, NotFoundPage — pagine sta
 
 ## 7. Backend API e modello dati News
 
-> Backend **esterno**, non incluso in questo repo. URL base attualmente hardcoded:
-> `http://152.228.137.245` (ripetuto in `HomePage`, `NewsPage`, `NewsDettaglioPage`,
-> `LoginPage`, `AdminPage`).
+> Backend **esterno**, non incluso in questo repo. URL base:
+> `https://api.uipanazionale.it` (HTTPS, dietro Nginx). Nel frontend è centralizzato
+> in [src/config.js](src/config.js) e importato da `HomePage`, `NewsPage`,
+> `NewsDettaglioPage`, `LoginPage`, `AdminPage` (via `REACT_APP_API_URL`).
 
 ### Endpoint
 
@@ -476,8 +478,8 @@ all'hamburger menu e le griglie si riducono a 1–2 colonne.
 Tutti i link esterni usano `target="_blank" rel="noopener noreferrer"`.
 
 ### Trasporto
-- L'API è servita in **HTTP semplice** (`http://152.228.137.245`), non HTTPS:
-  credenziali di login e token viaggiano in chiaro. **Da migrare a HTTPS.**
+- ✅ L'API è servita in **HTTPS** (`https://api.uipanazionale.it`) dietro Nginx, con
+  certificato Let's Encrypt e redirect HTTP→HTTPS. Credenziali e token viaggiano cifrati.
 
 ### Stato GDPR
 
@@ -502,14 +504,20 @@ Tutti i link esterni usano `target="_blank" rel="noopener noreferrer"`.
 - **Pannello Admin** con login, CRUD news, rich text editor, upload immagini, sezioni con posizionamento immagine e anteprima live
 - Integrazione con il backend REST per news e autenticazione
 
+### ✅ Risolto (migrazione backend, lug 2026)
+- **URL API** centralizzato in [src/config.js](src/config.js) + `REACT_APP_API_URL` (`.env.production`)
+- **HTTPS** attivo (`https://api.uipanazionale.it`, Nginx + Let's Encrypt) → **mixed content risolto**
+- **Segreti** (password DB, JWT) ruotati e spostati in `.env` sul server; **CORS ristretto** ai domini frontend
+- Vedi `INFRA-VPS-uipa.md` per i dettagli
+
 ### ⚠️ Criticità / debito tecnico
 | Tema | Dettaglio | Azione consigliata |
 | ---- | --------- | ------------------ |
-| URL API hardcoded | `http://152.228.137.245` ripetuto in 5–6 file | Centralizzare in un modulo (es. `src/config.js` o istanza axios) e usare `.env` (`REACT_APP_API_URL`) |
-| API in HTTP | Nessun TLS | Migrare il backend a HTTPS |
 | JWT in localStorage | Esposto a XSS | Valutare cookie httpOnly o almeno sanificare l'HTML delle news |
 | Form contatti mock | `handleSubmit` non invia nulla | Collegare a un endpoint backend (o servizio email) |
 | `dangerouslySetInnerHTML` | HTML non sanificato | Integrare DOMPurify |
+| Upload multer | Nessuna validazione tipo/dimensione (lato backend) | Aggiungere `fileFilter` + limiti |
+| Password admin default | `AdminUipa2026!` di seed | Cambiare la password admin |
 | `data/news.js` legacy | Non più usato | Rimuovere o archiviare |
 | GDPR | Privacy/cookie mancanti | Aggiungere pagina privacy + banner cookie |
 | Editor deprecato | `document.execCommand` | Ok per ora; valutare libreria (es. Tiptap) in futuro |

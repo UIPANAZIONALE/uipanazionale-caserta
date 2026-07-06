@@ -4,7 +4,7 @@ import axios from 'axios';
 import './AdminPage.css';
 
 
-const API_URL = 'http://152.228.137.245';
+import { API_URL } from '../../config';
 const EditorTesto = ({ value, onChange }) => {
   const ref = React.useRef(null);
 

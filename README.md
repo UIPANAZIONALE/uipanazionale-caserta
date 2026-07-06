@@ -9,7 +9,7 @@ dinamico** (backend REST esterno) e **pannello di amministrazione** protetto da 
 - **Routing**: React Router DOM v7
 - **HTTP**: `axios` (admin/login) + `fetch` nativo (news pubbliche)
 - **Stili**: CSS per componente (nessuna libreria UI esterna)
-- **Backend**: REST API esterna su VPS — `http://152.228.137.245` (repo separato)
+- **Backend**: REST API esterna su VPS — `https://api.uipanazionale.it` (HTTPS, repo separato)
 - **Auth**: JWT in `localStorage` + header `Authorization: Bearer`
 - **Editor news**: rich text custom (`contentEditable` + `document.execCommand`)
 
@@ -47,7 +47,7 @@ Il sito sarà disponibile su **http://localhost:3000**.
 ## Backend / API
 
 Il frontend consuma un backend REST **esterno** (non incluso in questo repo),
-attualmente all'URL **`http://152.228.137.245`**:
+all'URL **`https://api.uipanazionale.it`** (HTTPS, dietro Nginx sulla VPS OVH):
 
 | Metodo   | Endpoint          | Auth   | Descrizione                    |
 | -------- | ----------------- | ------ | ------------------------------ |
@@ -58,10 +58,10 @@ attualmente all'URL **`http://152.228.137.245`**:
 | `PUT`    | `/api/news/:id`   | Bearer | Modifica news                  |
 | `DELETE` | `/api/news/:id`   | Bearer | Elimina news                   |
 
-> ℹ️ L'URL dell'API è oggi **hardcoded** nei sorgenti (costante `API_URL` in
-> `HomePage`, `NewsPage`, `NewsDettaglioPage`, `LoginPage`, `AdminPage`).
-> È previsto di centralizzarlo e spostarlo in una variabile d'ambiente
-> (`REACT_APP_API_URL`). Al momento **non** sono usate variabili `.env`.
+> ℹ️ L'URL dell'API è centralizzato in [src/config.js](src/config.js)
+> (`export const API_URL = process.env.REACT_APP_API_URL || 'https://api.uipanazionale.it'`)
+> e importato dalle pagine che lo usano. In produzione è impostato via
+> `.env.production` (`REACT_APP_API_URL=https://api.uipanazionale.it`).
 
 ## Script disponibili
 
@@ -108,11 +108,12 @@ uipanazionale-caserta/
 
 ## Stato attuale / da fare
 
+- ✅ **API**: URL centralizzato in `src/config.js` + `REACT_APP_API_URL`; backend migrato a **HTTPS** (`https://api.uipanazionale.it`, dietro Nginx) con segreti in `.env` e CORS ristretto
 - ⚠️ **Form contatti**: attualmente **mock** — mostra la conferma ma non invia dati al backend
 - ⚠️ **reCAPTCHA**: non presente
 - ⚠️ **GDPR**: mancano pagina Privacy Policy, Cookie Policy e banner cookie
-- 🔧 **API**: URL hardcoded in HTTP → da centralizzare in `.env` e migrare a HTTPS
-- 🔧 **Sicurezza**: JWT in `localStorage`; valutare sanificazione HTML news (DOMPurify)
+- 🔧 **Sicurezza**: JWT in `localStorage`; valutare sanificazione HTML news (DOMPurify) e validazione upload
+- 📄 **Infrastruttura backend**: vedi **`INFRA-VPS-uipa.md`**
 
 Dettagli completi nell'analisi tecnica: vedi **`Architettetura.md`**.
 
