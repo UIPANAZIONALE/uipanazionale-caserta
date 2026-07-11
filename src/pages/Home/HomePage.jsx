@@ -30,7 +30,8 @@ useEffect(() => {
   fetch(`${API_URL}/api/news`)
     .then(res => res.json())
     .then(data => {
-      setNews(data.slice(0, 3));
+      const categorieSpeciali = ['Bandi', 'I Nostri Tutorial', 'Eventi', 'Turismo', 'Leggi e Regolamenti', 'Ambiente'];
+      setNews(data.filter(n => !categorieSpeciali.includes(n.categoria)).slice(0, 3));
       setBandi(data.filter(n => n.categoria === 'Bandi').slice(0, 1));
       setTutorial(data.filter(n => n.categoria === 'I Nostri Tutorial').slice(0, 1));
       setEventi(data.filter(n => n.categoria === 'Eventi').slice(0, 1));
