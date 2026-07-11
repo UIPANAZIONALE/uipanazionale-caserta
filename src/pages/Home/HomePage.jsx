@@ -19,14 +19,27 @@ const servizi = [
 
 const HomePage = () => {
   const [news, setNews] = useState([])
+  const [bandi, setBandi] = useState([]);
+  const [tutorial, setTutorial] = useState([]);
+  const [eventi, setEventi] = useState([]);
+  const [turismo, setTurismo] = useState([]);
+  const [leggi, setLeggi] = useState([]);
+  const [ambiente, setAmbiente] = useState([]);
   
 useEffect(() => {
   fetch(`${API_URL}/api/news`)
     .then(res => res.json())
-    .then(data => setNews(data.slice(0, 3)))
+    .then(data => {
+      setNews(data.slice(0, 3));
+      setBandi(data.filter(n => n.categoria === 'Bandi').slice(0, 1));
+      setTutorial(data.filter(n => n.categoria === 'I Nostri Tutorial').slice(0, 1));
+      setEventi(data.filter(n => n.categoria === 'Eventi').slice(0, 1));
+      setTurismo(data.filter(n => n.categoria === 'Turismo').slice(0, 1));
+      setLeggi(data.filter(n => n.categoria === 'Leggi e Regolamenti').slice(0, 1));
+      setAmbiente(data.filter(n => n.categoria === 'Ambiente').slice(0, 1));
+    })
     .catch(err => console.error(err));
 }, []);
-
   return (
     <div>
 
@@ -150,15 +163,144 @@ useEffect(() => {
        <Link to={`/news/${n.slug}`} key={n.id} className="news-card">
   {n.immagine && (
     <div className="news-card__img">
-      <img src={`${API_URL}${n.immagine}`} alt={n.titolo} />
+    <img src={`${API_URL}${n.immagine}`} alt={n.titolo} />
     </div>
   )}
   <div className="news-card__cat">{n.categoria}</div>
   <h3 className="news-card__titolo">{n.titolo}</h3>
   <p className="news-card__estratto">{n.estratto}</p>
-  <span className="news-card__data">{n.data}</span>
+  <span className="news-card__data">
+  {new Date(n.data).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}
+</span>
 </Link>
       ))}
+    </div>
+  </div>
+</section>
+
+<section className="categorie-section">
+  <div className="container">
+    <div className="categorie-grid">
+
+      <div className="categoria-col">
+        <h3 className="categoria-col__titolo">EVENTI TERRITORIO</h3>
+        {eventi[0] ? (
+          <div className="categoria-card">
+            {eventi[0].immagine && (
+              <img src={`${API_URL}${eventi[0].immagine}`} alt={eventi[0].titolo} className="categoria-card__img" />
+            )}
+            <h4 className="categoria-card__titolo">{eventi[0].titolo}</h4>
+            <div className="categoria-card__meta">
+              <span>{new Date(eventi[0].data).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' })}</span>
+            </div>
+          </div>
+        ) : (
+          <div className="categoria-card categoria-card--vuota">
+            <p>Nessun evento disponibile</p>
+          </div>
+        )}
+        <Link to="/news?categoria=Eventi" className="categoria-card__link">VAI ALLA SEZIONE →</Link>
+      </div>
+
+      <div className="categoria-col">
+        <h3 className="categoria-col__titolo">BANDI</h3>
+        {bandi[0] ? (
+          <div className="categoria-card">
+            {bandi[0].immagine && (
+              <img src={`${API_URL}${bandi[0].immagine}`} alt={bandi[0].titolo} className="categoria-card__img" />
+            )}
+            <h4 className="categoria-card__titolo">{bandi[0].titolo}</h4>
+            <div className="categoria-card__meta">
+              <span>{new Date(bandi[0].data).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' })}</span>
+            </div>
+          </div>
+        ) : (
+          <div className="categoria-card categoria-card--vuota">
+            <p>Nessun bando disponibile</p>
+          </div>
+        )}
+        <Link to="/news?categoria=Bandi" className="categoria-card__link">VAI ALLA SEZIONE →</Link>
+      </div>
+
+      <div className="categoria-col">
+        <h3 className="categoria-col__titolo">I NOSTRI TUTORIAL</h3>
+        {tutorial[0] ? (
+          <div className="categoria-card">
+            {tutorial[0].immagine && (
+              <img src={`${API_URL}${tutorial[0].immagine}`} alt={tutorial[0].titolo} className="categoria-card__img" />
+            )}
+            <h4 className="categoria-card__titolo">{tutorial[0].titolo}</h4>
+            <div className="categoria-card__meta">
+              <span>{new Date(tutorial[0].data).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' })}</span>
+            </div>
+          </div>
+        ) : (
+          <div className="categoria-card categoria-card--vuota">
+            <p>Nessun tutorial disponibile</p>
+          </div>
+        )}
+        <Link to="/news?categoria=I Nostri Tutorial" className="categoria-card__link">VAI ALLA SEZIONE →</Link>
+      </div>
+      <div className="categoria-col">
+  <h3 className="categoria-col__titolo">TURISMO</h3>
+  {turismo[0] ? (
+    <div className="categoria-card">
+      {turismo[0].immagine && (
+        <img src={`${API_URL}${turismo[0].immagine}`} alt={turismo[0].titolo} className="categoria-card__img" />
+      )}
+      <h4 className="categoria-card__titolo">{turismo[0].titolo}</h4>
+      <div className="categoria-card__meta">
+        <span>{new Date(turismo[0].data).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' })}</span>
+      </div>
+    </div>
+  ) : (
+    <div className="categoria-card categoria-card--vuota">
+      <p>Nessun articolo disponibile</p>
+    </div>
+  )}
+  <Link to="/news?categoria=Turismo" className="categoria-card__link">VAI ALLA SEZIONE →</Link>
+</div>
+
+<div className="categoria-col">
+  <h3 className="categoria-col__titolo">LEGGI E REGOLAMENTI</h3>
+  {leggi[0] ? (
+    <div className="categoria-card">
+      {leggi[0].immagine && (
+        <img src={`${API_URL}${leggi[0].immagine}`} alt={leggi[0].titolo} className="categoria-card__img" />
+      )}
+      <h4 className="categoria-card__titolo">{leggi[0].titolo}</h4>
+      <div className="categoria-card__meta">
+        <span>{new Date(leggi[0].data).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' })}</span>
+      </div>
+    </div>
+  ) : (
+    <div className="categoria-card categoria-card--vuota">
+      <p>Nessun articolo disponibile</p>
+    </div>
+  )}
+  <Link to="/news?categoria=Leggi e Regolamenti" className="categoria-card__link">VAI ALLA SEZIONE →</Link>
+</div>
+
+<div className="categoria-col">
+  <h3 className="categoria-col__titolo">AMBIENTE</h3>
+  {ambiente[0] ? (
+    <div className="categoria-card">
+      {ambiente[0].immagine && (
+        <img src={`${API_URL}${ambiente[0].immagine}`} alt={ambiente[0].titolo} className="categoria-card__img" />
+      )}
+      <h4 className="categoria-card__titolo">{ambiente[0].titolo}</h4>
+      <div className="categoria-card__meta">
+        <span>{new Date(ambiente[0].data).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' })}</span>
+      </div>
+    </div>
+  ) : (
+    <div className="categoria-card categoria-card--vuota">
+      <p>Nessun articolo disponibile</p>
+    </div>
+  )}
+  <Link to="/news?categoria=Ambiente" className="categoria-card__link">VAI ALLA SEZIONE →</Link>
+</div>
+
     </div>
   </div>
 </section>

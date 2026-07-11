@@ -471,6 +471,82 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
+/* ── SEZIONI CATEGORIE ── */
+.categorie-section {
+  padding: 50px 0;
+  background: #fff;
+}
+
+.categorie-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.categoria-col__titolo {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #f0a500;
+}
+
+.categoria-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.categoria-card__img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+
+.categoria-card__titolo {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1a2266;
+  text-transform: uppercase;
+  line-height: 1.4;
+  margin-bottom: 10px;
+  flex: 1;
+}
+
+.categoria-card__meta {
+  font-size: 0.78rem;
+  color: #888;
+  margin-bottom: 12px;
+}
+
+.categoria-card__link {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #f0a500;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: color 0.2s;
+}
+
+.categoria-card__link:hover {
+  color: #c07800;
+}
+.categoria-card--vuota {
+  background: #f8f9fd;
+  border-radius: 8px;
+  padding: 40px 20px;
+  text-align: center;
+  color: #999;
+  font-size: 0.85rem;
+  flex: 1;
+  margin-bottom: 12px;
+}
+
+
 
 @media (max-width: 900px) {
   .banner-unicaf__inner { grid-template-columns: 1fr; }

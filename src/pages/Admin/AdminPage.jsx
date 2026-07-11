@@ -167,6 +167,12 @@ const FormNews = ({ editData, onSave, onCancel, token }) => {
               <option>Agricoltura</option>
               <option>Immobili e Terreni</option>
               <option>Disabilita</option>
+              <option>Bandi</option>
+              <option>Turismo</option>
+              <option>Ambiente</option>
+              <option>Leggi e Regolamenti</option>
+              <option>I Nostri Tutorial</option>
+              <option>Eventi</option>
             </select>
           </div>
           <div className="editor-field">

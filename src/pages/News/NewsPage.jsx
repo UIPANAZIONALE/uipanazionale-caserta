@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PageTemplate from '../../components/PageTemplate/PageTemplate';
+import { useLocation } from 'react-router-dom';
 import './NewsPage.css';
 
 import { API_URL } from '../../config';
 
-const categorie = ['Tutte', 'Fisco', 'Lavoro', 'Pensioni', 'Famiglia', 'Normativa', 'Agricoltura', 'Immobili e Terreni', 'Disabilita'];
+const categorie = ['Tutte', 'Fisco', 'Lavoro', 'Pensioni', 'Famiglia', 'Normativa', 'Agricoltura', 'Immobili e Terreni', 'Disabilita', 'Bandi', 'Turismo', 'Ambiente', 'Leggi e Regolamenti', 'I Nostri Tutorial', 'Eventi'];
 
 const NewsPage = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [categoriaAttiva, setCategoriaAttiva] = useState('Tutte');
   const [ricerca, setRicerca] = useState('');
+  const location = useLocation();
 
   useEffect(() => {
     fetch(`${API_URL}/api/news`)
