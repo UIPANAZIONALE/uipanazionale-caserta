@@ -137,7 +137,10 @@
 @media (max-width: 768px) {
   .hero__title { font-size: 2.2rem; }
   .hero__sub { font-size: 1rem; }
-  .hero__stats { gap: 24px; }
+  .hero__stats {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+  }
   .hero__stat-num { font-size: 1.8rem; }
 }
 /* ── SERVIZI ── */
@@ -369,7 +372,6 @@
 
 @media (max-width: 600px) {
   .hero__title { font-size: 1.7rem; }
-  .servizi-grid { grid-template-columns: 1fr 1fr; }
 }
 /* ── BANNER UNICAF ── */
 .banner-unicaf {
@@ -481,6 +483,20 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 32px;
+}
+
+@media (max-width: 900px) {
+  .categorie-grid { 
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .categorie-grid { 
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }
 .categoria-col__titolo {
   font-size: 0.85rem;

@@ -60,7 +60,7 @@ const Footer = () => {
           <h4 className="footer__title">Contatti</h4>
           <address className="footer__address">
             <p>Tel: <a href="tel:0642020719">06 42020719</a></p>
-            <p>Email: <a href="mailto:info@uipa.it">info@uipa.it</a></p>
+            <p>Email: <a href="mailto:uipanazionale@gmail.com">uipanazionale@gmail.com</a></p>
             <p>
               <a href="https://www.facebook.com/uipaitalia/" target="_blank" rel="noopener noreferrer">
                 Facebook UIPA
@@ -74,7 +74,7 @@ const Footer = () => {
       <div className="footer__bottom">
         <div className="container">
           <p>
-            Tel: 06 42020719 - Email: <a href="mailto:info@uipa.it">info@uipa.it</a>
+           Tel: 06 42020719 - Email: <a href="mailto:uipanazionale@gmail.com">uipanazionale@gmail.com</a>
             &nbsp;|&nbsp;
             copyright {new Date().getFullYear()} UIPA.it - Tutti i diritti riservati
           </p>

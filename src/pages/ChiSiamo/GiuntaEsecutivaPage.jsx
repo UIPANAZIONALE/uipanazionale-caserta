@@ -4,7 +4,7 @@ import './GiuntaEsecutivaPage.css';
 
 const membri = [
   { nome: 'Massimo Russo', ruolo: 'Presidente' },
-  { nome: 'Raffaele Petrilli', ruolo: 'Vice Presidente' },
+  { nome: 'Cocetto Iannello', ruolo: 'Vice Presidente' },
   { nome: 'Antonella Natale', ruolo: 'Responsabile Organizzazione' },
 ];
 
