@@ -47,20 +47,21 @@ const PresidentePage = () => (
         </div>
       </div>
 
-      {/* Foto */}
-      <div className="presidente__foto-col">
-        <div className="presidente__foto-box">
-          <div className="presidente__foto-placeholder">
-            <span>Foto</span>
-            <span>Massimo Russo</span>
-          </div>
-          <div className="presidente__card">
-            <h4>Massimo Russo</h4>
-            <p>Presidente UIPA Nazionale</p>
-            <p>In carica dal 2014</p>
-          </div>
-        </div>
-      </div>
+    {/* Foto */}
+<div className="presidente__foto-col">
+  <div className="presidente__foto-box">
+    <img 
+      src={require('../../assets/massimorusso.jpg')} 
+      alt="Massimo Russo - Presidente UIPA"
+      className="presidente__foto"
+    />
+    <div className="presidente__card">
+      <h4>Massimo Russo</h4>
+      <p>Presidente UIPA Nazionale</p>
+      <p>In carica dal 2014</p>
+    </div>
+  </div>
+</div>
 
     </div>
 

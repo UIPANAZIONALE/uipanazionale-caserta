@@ -50,7 +50,7 @@ const NewsDettaglioPage = () => {
   );
 
   return (
-    <PageTemplate titolo={articolo.titolo} sottotitolo={articolo.categoria}>
+    <PageTemplate titolo={articolo.titolo} sottotitolo={articolo.categoria} immagine={require('../../assets/heronewsall.jpg')}>
 
       <div className="news-det__meta">
         <Link to="/news" className="news-det__back">← Tutte le news</Link>

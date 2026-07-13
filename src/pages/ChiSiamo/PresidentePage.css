@@ -134,6 +134,12 @@
   font-size: 0.82rem;
   margin-bottom: 4px;
 }
+.presidente__foto {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  margin-bottom: 16px;
+}
 
 @media (max-width: 900px) {
   .presidente__layout {
