@@ -58,7 +58,7 @@ useEffect(() => {
   <div className="hero__overlay">
     <div className="hero__content container">
       <h1 className="hero__title">
-        Unione Italiana Professionalita in Agricoltura
+        Unione Italiana Professionalità in Agricoltura
       </h1>
       <p className="hero__sub">
         Tutela i diritti e gli interessi dei lavoratori autonomi<br />

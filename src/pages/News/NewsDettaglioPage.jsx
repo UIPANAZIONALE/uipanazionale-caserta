@@ -111,7 +111,7 @@ const NewsDettaglioPage = () => {
             <ul className="sidebar__links">
               <li><a href="https://unicafsrl.it" target="_blank" rel="noopener noreferrer">UNICAF – Pratiche fiscali online</a></li>
               <li><a href="https://www.caauipa.it" target="_blank" rel="noopener noreferrer">CAA UIPA – Pratiche agricole</a></li>
-              <li><a href="https://www.patronatoanmil.it" target="_blank" rel="noopener noreferrer">Patronato ANMIL</a></li>
+              <li><a href="https://ilpatronato.it/" target="_blank" rel="noopener noreferrer">Patronato INPAS</a></li>
               <li><a href="https://www.usacademy.it" target="_blank" rel="noopener noreferrer">US Academy – Formazione</a></li>
             </ul>
           </div>
