@@ -61,7 +61,7 @@ const ContattiPage = () => {
           <h3>UIPA – Sede Nazionale</h3>
           <div className="contatti__info-item">
             <span className="contatti__info-label">Indirizzo</span>
-            <span className="contatti__info-value">Via Sicilia – 00187 Roma</span>
+            <span className="contatti__info-value">Via Sicilia, 50 – 00187 Roma</span>
           </div>
           <div className="contatti__info-item">
             <span className="contatti__info-label">Telefono</span>
@@ -69,29 +69,14 @@ const ContattiPage = () => {
           </div>
           <div className="contatti__info-item">
             <span className="contatti__info-label">Email</span>
-            <span className="contatti__info-value"><a href="mailto:info@uipa.it">info@uipa.it</a></span>
-          </div>
-          <div style={{ marginTop: '30px' }}>
-            <h3>UIPA – Sede di Caserta</h3>
-            <div className="contatti__info-item">
-              <span className="contatti__info-label">Indirizzo</span>
-              <span className="contatti__info-value">Via Arena, 37 – 81100 Caserta</span>
-            </div>
-            <div className="contatti__info-item">
-              <span className="contatti__info-label">Telefono</span>
-              <span className="contatti__info-value"><a href="tel:0823320088">0823 320088</a></span>
-            </div>
-            <div className="contatti__info-item">
-              <span className="contatti__info-label">Email</span>
-              <span className="contatti__info-value"><a href="mailto:info@uipa.it">info@uipa.it</a></span>
-            </div>
+            <span className="contatti__info-value"><a href="mailto:uipanazionale@gmail.com">uipanazionale@gmail.com</a></span>
           </div>
         </div>
 
         <div className="contatti__mappa">
           <iframe
             title="Mappa UIPA Caserta"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.1252325714077!2d14.34569479785833!3d41.06625514138477!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x133a545af49fc2e3%3A0xcf1d5f59a0e222f8!2sVia%20Maggiore%20Salvatore%20Arena%2C%2037%2C%2081100%20Caserta%20CE!5e0!3m2!1sit!2sit!4v1623747893818!5m2!1sit!2sit"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d371.15787914679925!2d12.490738421549306!3d41.908703950644075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132f61073dcd4a9b%3A0x9d97087a3187476!2sVia%20Sicilia%2C%2050%2C%2000187%20Roma%20RM!5e0!3m2!1sit!2sit!4v1783954524095!5m2!1sit!2sit"
             width="100%"
             height="400"
             style={{ border: 0, display: 'block' }}

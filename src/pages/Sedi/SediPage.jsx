@@ -14,13 +14,14 @@ const sedi = [
   { nome: 'UIPA VIBO VALENTIA', indirizzo: 'Via Corrado Alvaro, 15', cap: '89900', citta: 'Vibo Valentia', provincia: 'VV', regione: 'Calabria' },
   { nome: 'UIPA BENEVENTO', indirizzo: 'Piazza San Barbato, 4', cap: '82037', citta: 'Castelvenere', provincia: 'BN', regione: 'Campania' },
   { nome: 'UIPA AVELLINO', indirizzo: 'Via Frate Agostino da Casoria', cap: '81023', citta: 'Lauro', provincia: 'AV', regione: 'Campania' },
-  { nome: 'UIPA CASERTA', indirizzo: 'Via Arena, 37', cap: '81100', citta: 'Caserta', provincia: 'CE', regione: 'Campania', principale: true },
+  { nome: 'UIPA CASERTA', indirizzo: 'Via Arena, 37', cap: '81100', citta: 'Caserta', provincia: 'CE', regione: 'Campania' },
   { nome: 'UIPA NAPOLI', indirizzo: 'Via Cavallotti, 1', cap: '80038', citta: 'Pomigliano', provincia: 'NA', regione: 'Campania' },
   { nome: 'UIPA BRUSCIANO', indirizzo: 'Viale Europa, 6', cap: '80031', citta: 'Brusciano', provincia: 'NA', regione: 'Campania' },
   { nome: 'UIPA SALERNO', indirizzo: 'Via Galloppo, 48', cap: '84128', citta: 'Salerno', provincia: 'SA', regione: 'Campania' },
   { nome: 'UIPA UDINE', indirizzo: 'Via Zorutti, 10', cap: '33043', citta: 'Cividale del Friuli', provincia: 'UD', regione: 'Friuli Venezia Giulia' },
   { nome: 'UIPA CASSINO', indirizzo: 'Via del Foro, 19', cap: '03043', citta: 'Cassino', provincia: 'FR', regione: 'Lazio' },
   { nome: 'UIPA ROMA', indirizzo: 'Via Licia, 14 int. 13', cap: '00183', citta: 'Roma', provincia: 'RM', regione: 'Lazio' },
+  { nome: 'UIPA ROMA', indirizzo: 'Via Sicilia, 50 ', cap: '00183', citta: 'Roma', provincia: 'RM', regione: 'Lazio', principale: true },
   { nome: 'UIPA BATTISTINI', indirizzo: 'Via Mattia Battistini, 30', cap: '00167', citta: 'Roma', provincia: 'RM', regione: 'Lazio' },
   { nome: 'UIPA CASALOTTI', indirizzo: 'Via Borgo Ticino, 47', cap: '00166', citta: 'Roma', provincia: 'RM', regione: 'Lazio' },
   { nome: 'UIPA COLONNA', indirizzo: 'Via Frascati, 14', cap: '00030', citta: 'Colonna', provincia: 'RM', regione: 'Lazio' },
@@ -112,7 +113,7 @@ const SediPage = () => {
       <div className="sedi__grid">
         {sediFiltrate.map((s, idx) => (
           <div key={idx} className={`sedi__card ${s.principale ? 'sedi__card--principale' : ''}`}>
-            {s.principale && <span className="sedi__badge">Sede provinciale</span>}
+            {s.principale && <span className="sedi__badge">Sede Nazionale</span>}
             <h3>{s.nome}</h3>
             <p>{s.indirizzo}</p>
             <p>{s.cap} {s.citta} ({s.provincia})</p>
