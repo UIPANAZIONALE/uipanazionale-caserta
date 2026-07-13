@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import PageTemplate from '../../components/PageTemplate/PageTemplate';
+import { API_URL } from '../../config';
 import './ContattiPage.css';
 
 const ContattiPage = () => {
   const [formData, setFormData] = useState({
     nome: '',
+    cognome: '',
     email: '',
     telefono: '',
     oggetto: '',
@@ -13,6 +15,8 @@ const ContattiPage = () => {
   });
 
   const [inviato, setInviato] = useState(false);
+  const [errore, setErrore] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -22,18 +26,37 @@ const ContattiPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form inviato:', formData);
-    setInviato(true);
+    setLoading(true);
+    setErrore('');
+    try {
+      const res = await fetch(`${API_URL}/api/contatti`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nome: formData.nome,
+          cognome: formData.cognome,
+          telefono: formData.telefono,
+          email: formData.email,
+          oggetto: formData.oggetto,
+          messaggio: formData.messaggio,
+          privacy_accettata: formData.privacy,
+        }),
+      });
+      if (!res.ok) throw new Error('Errore invio');
+      setInviato(true);
+    } catch (err) {
+      setErrore('Errore durante l\'invio. Riprova o contattaci per telefono.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <PageTemplate titolo="Contatti" sottotitolo="Siamo a tua disposizione" immagine={require('../../assets/hero-contatti.png')}>
 
-      {/* INFO + MAPPA */}
       <div className="contatti__grid">
-
         <div className="contatti__info">
           <h3>UIPA – Sede Nazionale</h3>
           <div className="contatti__info-item">
@@ -42,17 +65,12 @@ const ContattiPage = () => {
           </div>
           <div className="contatti__info-item">
             <span className="contatti__info-label">Telefono</span>
-            <span className="contatti__info-value">
-              <a href="tel:0642020719">06 42020719</a>
-            </span>
+            <span className="contatti__info-value"><a href="tel:0642020719">06 42020719</a></span>
           </div>
           <div className="contatti__info-item">
             <span className="contatti__info-label">Email</span>
-            <span className="contatti__info-value">
-              <a href="mailto:info@uipa.it">info@uipa.it</a>
-            </span>
+            <span className="contatti__info-value"><a href="mailto:info@uipa.it">info@uipa.it</a></span>
           </div>
-
           <div style={{ marginTop: '30px' }}>
             <h3>UIPA – Sede di Caserta</h3>
             <div className="contatti__info-item">
@@ -61,15 +79,11 @@ const ContattiPage = () => {
             </div>
             <div className="contatti__info-item">
               <span className="contatti__info-label">Telefono</span>
-              <span className="contatti__info-value">
-                <a href="tel:0823320088">0823 320088</a>
-              </span>
+              <span className="contatti__info-value"><a href="tel:0823320088">0823 320088</a></span>
             </div>
             <div className="contatti__info-item">
               <span className="contatti__info-label">Email</span>
-              <span className="contatti__info-value">
-                <a href="mailto:info@uipa.it">info@uipa.it</a>
-              </span>
+              <span className="contatti__info-value"><a href="mailto:info@uipa.it">info@uipa.it</a></span>
             </div>
           </div>
         </div>
@@ -85,10 +99,8 @@ const ContattiPage = () => {
             loading="lazy"
           />
         </div>
-
       </div>
 
-      {/* FORM */}
       <div style={{ marginTop: '50px' }}>
         <h2 className="section-title">Contattaci per ulteriori informazioni</h2>
 
@@ -102,51 +114,67 @@ const ContattiPage = () => {
             color: '#c07800',
             fontWeight: '600'
           }}>
-            Messaggio inviato! Ti risponderemo al piu presto.
+            ✅ Messaggio inviato! Ti risponderemo al piu presto.
           </div>
         ) : (
           <form className="contatti__form" onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>Nome e Cognome *</label>
-              <input type="text" name="nome" value={formData.nome}
-                onChange={handleChange} placeholder="Mario Rossi" required />
+            <div className="form-row">
+              <div className="form-group">
+                <label>Nome *</label>
+                <input type="text" name="nome" value={formData.nome}
+                  onChange={handleChange} placeholder="Mario" required />
+              </div>
+              <div className="form-group">
+                <label>Cognome *</label>
+                <input type="text" name="cognome" value={formData.cognome}
+                  onChange={handleChange} placeholder="Rossi" required />
+              </div>
             </div>
-            <div className="form-group">
-              <label>Email *</label>
-              <input type="email" name="email" value={formData.email}
-                onChange={handleChange} placeholder="mario@email.it" required />
-            </div>
-            <div className="form-group">
-              <label>Telefono</label>
-              <input type="tel" name="telefono" value={formData.telefono}
-                onChange={handleChange} placeholder="333 1234567" />
+            <div className="form-row">
+              <div className="form-group">
+                <label>Email *</label>
+                <input type="email" name="email" value={formData.email}
+                  onChange={handleChange} placeholder="mario@email.it" required />
+              </div>
+              <div className="form-group">
+                <label>Telefono</label>
+                <input type="tel" name="telefono" value={formData.telefono}
+                  onChange={handleChange} placeholder="333 1234567" />
+              </div>
             </div>
             <div className="form-group">
               <label>Oggetto *</label>
               <select name="oggetto" value={formData.oggetto}
                 onChange={handleChange} required>
                 <option value="">Seleziona un argomento</option>
-                <option value="patronato">Servizi di Patronato</option>
-                <option value="caf">Servizi CAF</option>
-                <option value="caa">CAA Agricoltura</option>
-                <option value="lavoro">Lavoro Domestico</option>
-                <option value="sede">Apri una Sede</option>
-                <option value="altro">Altro</option>
+                <option value="Servizi di Patronato">Servizi di Patronato</option>
+                <option value="Servizi CAF">Servizi CAF</option>
+                <option value="CAA Agricoltura">CAA Agricoltura</option>
+                <option value="Lavoro Domestico">Lavoro Domestico</option>
+                <option value="Apri una Sede">Apri una Sede</option>
+                <option value="Tesseramento">Tesseramento</option>
+                <option value="Altro">Altro</option>
               </select>
             </div>
             <div className="form-group">
               <label>Messaggio *</label>
               <textarea name="messaggio" value={formData.messaggio}
-                onChange={handleChange} placeholder="Scrivi qui il tuo messaggio..." required />
+                onChange={handleChange} placeholder="Scrivi qui il tuo messaggio..." required rows={5} />
             </div>
             <label className="form__privacy">
               <input type="checkbox" name="privacy"
                 checked={formData.privacy} onChange={handleChange} required />
-              Ho letto l'informativa sulla privacy e acconsento al trattamento dei dati personali
+              Ho letto l'<a href="/privacy" target="_blank">informativa sulla privacy</a> e acconsento al trattamento dei dati personali
             </label>
+            {errore && (
+              <div style={{ color: '#c00', padding: '10px', background: '#fee', borderRadius: '4px', marginTop: '10px' }}>
+                {errore}
+              </div>
+            )}
             <button type="submit" className="btn btn-verde form__submit"
-              style={{ background: '#f0a500', color: '#fff', border: 'none', cursor: 'pointer' }}>
-              Invia messaggio
+              style={{ background: '#f0a500', color: '#fff', border: 'none', cursor: 'pointer' }}
+              disabled={loading}>
+              {loading ? 'Invio in corso...' : 'Invia messaggio'}
             </button>
           </form>
         )}

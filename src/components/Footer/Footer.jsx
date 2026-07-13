@@ -28,6 +28,8 @@ const Footer = () => {
             <li><Link to="/tesseramento">Tesseramento</Link></li>
             <li><Link to="/sedi">Sedi</Link></li>
             <li><Link to="/contatti">Contatti</Link></li>
+           <li><Link to="/privacy">Privacy Policy</Link></li> 
+           <li><Link to="/cookie-policy">Cookie Policy</Link></li> 
           </ul>
         </div>
 

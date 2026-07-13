@@ -1,5 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import PrivacyPolicyPage from './pages/PrivacyPolicy/PrivacyPolicyPage';
+import CookiePolicyPage from './pages/CookiePolicy/CookiePolicyPage';
+import CookieBanner from './components/CookieBanner/CookieBanner';
 import './App.css';
 
 
@@ -34,6 +37,7 @@ const ComingSoon = ({ titolo }) => (
 
 function App() {
   return (
+    
     <Router>
       <Navbar />
       <Routes>
@@ -60,8 +64,11 @@ function App() {
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/news" element={<NewsPage />} />
         <Route path="/news/:slug" element={<NewsDettaglioPage />} />
+        <Route path="/privacy" element={<PrivacyPolicyPage />} />
+        <Route path="/cookie-policy" element={<CookiePolicyPage />} />
       </Routes>
       <Footer />
+      <CookieBanner />
     </Router>
   );
 }
