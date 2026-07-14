@@ -12,16 +12,25 @@ const CookieBanner = () => {
 
   const accettaTutti = () => {
     localStorage.setItem('uipa_cookie_consent', 'all');
+     window.gtag && window.gtag('consent', 'update', {
+    analytics_storage: 'granted'
+  });
     setVisible(false);
   };
 
   const soloNecessari = () => {
     localStorage.setItem('uipa_cookie_consent', 'necessary');
+    window.gtag && window.gtag('consent', 'update', {
+    analytics_storage: 'denied'
+  });
     setVisible(false);
   };
 
   const rifiuta = () => {
     localStorage.setItem('uipa_cookie_consent', 'rejected');
+    window.gtag && window.gtag('consent', 'update', {
+    analytics_storage: 'denied'
+  });
     setVisible(false);
   };
 

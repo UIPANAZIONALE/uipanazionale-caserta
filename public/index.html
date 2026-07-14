@@ -1,5 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+  <!-- Google Analytics con Consent Mode -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-39EM6MQDPR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  
+  gtag('consent', 'default', {
+    analytics_storage: 'denied'
+  });
+  
+  gtag('js', new Date());
+  gtag('config', 'G-39EM6MQDPR');
+  
+  const consent = localStorage.getItem('uipa_cookie_consent');
+  if (consent === 'all') {
+    gtag('consent', 'update', { analytics_storage: 'granted' });
+  }
+</script>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
@@ -25,6 +43,14 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-39EM6MQDPR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-39EM6MQDPR');
+</script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
