@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import PageTemplate from '../../components/PageTemplate/PageTemplate';
 import caf from '../../data/caf';
 import './ServiziCafPage.css';
+import BoxUnicaf from '../../components/BoxUnicaf/BoxUnicaf';
 
 // Vista dettaglio singolo servizio CAF
 const DettaglioServizioCaf = ({ servizioId }) => {
@@ -98,7 +99,7 @@ const ServiziCafPage = () => {
           <a href="mailto:info@uipa.it">info@uipa.it</a>
         </div>
       </div>
-
+      <BoxUnicaf layout="banner" />
     </PageTemplate>
   );
 };

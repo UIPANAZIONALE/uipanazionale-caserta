@@ -1,0 +1,113 @@
+.box-unicaf {
+  background: linear-gradient(135deg, #0a1628, #1a3a5c);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Sidebar - piccolo */
+.box-unicaf--sidebar {
+  width: 100%;
+}
+
+/* Banner - largo in fondo */
+.box-unicaf--banner {
+  margin-top: 40px;
+  width: 100%;
+}
+
+.box-unicaf--banner .box-unicaf__inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 28px;
+}
+
+.box-unicaf--banner .box-unicaf__sub {
+  margin: 0;
+}
+
+.box-unicaf--banner .box-unicaf__convenzione {
+  display: block;
+  grid-column: 1 / -1;
+  text-align: center;
+  padding-bottom: 8px;
+}
+
+.box-unicaf__inner {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.box-unicaf__titolo {
+  color: #34d399;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #34d399;
+}
+
+.box-unicaf__sub {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+.box-unicaf__servizio {
+  background: rgba(255,255,255,0.08);
+  border-radius: 6px;
+  padding: 10px 12px;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.box-unicaf__testo {
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  animation: slideIn 0.4s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.box-unicaf__btn {
+  display: block;
+  background: #34d399;
+  color: #0a1628;
+  text-align: center;
+  padding: 9px;
+  border-radius: 4px;
+  font-weight: 800;
+  font-size: 0.82rem;
+  text-decoration: none;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.box-unicaf__btn:hover {
+  background: #10b981;
+  color: #0a1628;
+}
+
+.box-unicaf__convenzione {
+  display: block;
+  text-align: center;
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 700px) {
+  .box-unicaf--banner .box-unicaf__inner {
+    grid-template-columns: 1fr;
+  }
+}

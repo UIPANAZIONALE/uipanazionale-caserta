@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import PageTemplate from '../../components/PageTemplate/PageTemplate';
 import patronato from '../../data/patronato';
 import './ServiziPatronatoPage.css';
-
+import BoxUnicaf from '../../components/BoxUnicaf/BoxUnicaf';
 // Vista dettaglio singolo servizio
 const DettaglioServizio = ({ categoriaId, servizioId }) => {
   const categoria = patronato.find(c => c.id === categoriaId);
@@ -110,7 +110,7 @@ const ServiziPatronatoPage = () => {
           </Link>
         ))}
       </div>
-
+        <BoxUnicaf layout="banner" />
     </PageTemplate>
   );
 };
