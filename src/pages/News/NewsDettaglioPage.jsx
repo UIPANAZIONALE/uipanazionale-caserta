@@ -10,6 +10,15 @@ const NewsDettaglioPage = () => {
   const [articolo, setArticolo] = useState(null);
   const [correlati, setCorrelati] = useState([]);
   const [loading, setLoading] = useState(true);
+   const [currentServizio, setCurrentServizio] = useState(0);
+const serviziUnicaf = ['ISEE Online', 'Modello 730', 'Patronato INPS', 'Successioni', 'CAF Online'];
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setCurrentServizio(prev => (prev + 1) % serviziUnicaf.length);
+  }, 2000);
+  return () => clearInterval(interval);
+}, []);
 
   useEffect(() => {
     fetch(`${API_URL}/api/news/${slug}`)
@@ -113,8 +122,27 @@ const NewsDettaglioPage = () => {
               <li><a href="https://www.caauipa.it" target="_blank" rel="noopener noreferrer">CAA UIPA – Pratiche agricole</a></li>
               <li><a href="https://ilpatronato.it/" target="_blank" rel="noopener noreferrer">Patronato INPAS</a></li>
               <li><a href="https://www.usacademy.it" target="_blank" rel="noopener noreferrer">US Academy – Formazione</a></li>
+              <li><a href="https://www.uidd.it" target="_blank" rel="noopener noreferrer">UIDD – Intermediazione Lavoro</a></li>
             </ul>
           </div>
+          <div className="sidebar__box sidebar__unicaf">
+  <h4>UNICAF</h4>
+  <p className="sidebar__unicaf-sub">Assistenza fiscale 100% online</p>
+  <div className="sidebar__unicaf-servizio">
+    <span key={currentServizio} className="sidebar__unicaf-testo">
+      ✦ {serviziUnicaf[currentServizio]}
+    </span>
+  </div>
+  <a
+    href="https://unicafsrl.it"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="sidebar__unicaf-btn"
+  >
+    Scopri →
+  </a>
+  <span className="sidebar__unicaf-convenzione">servizio in convenzione</span>
+</div>
 
           {correlati.length > 0 && (
             <div className="sidebar__box">

@@ -462,3 +462,68 @@
     gap: 8px;
   }
 }
+
+.sidebar__unicaf {
+  background: linear-gradient(135deg, #0a1628, #1a3a5c) !important;
+  border: none !important;
+}
+
+.sidebar__unicaf h4 {
+  color: #34d399 !important;
+  border-bottom-color: #34d399 !important;
+}
+
+.sidebar__unicaf-sub {
+  color: rgba(255,255,255,0.6) !important;
+  font-size: 0.75rem;
+  margin-bottom: 12px;
+}
+
+.sidebar__unicaf-servizio {
+  background: rgba(255,255,255,0.08);
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar__unicaf-testo {
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  animation: slideIn 0.4s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.sidebar__unicaf-btn {
+  display: block;
+  background: #34d399;
+  color: #0a1628 !important;
+  text-align: center;
+  padding: 9px;
+  border-radius: 4px;
+  font-weight: 800;
+  font-size: 0.82rem;
+  text-decoration: none !important;
+  margin-bottom: 8px;
+  transition: background 0.2s;
+}
+
+.sidebar__unicaf-btn:hover {
+  background: #10b981;
+}
+
+.sidebar__unicaf-convenzione {
+  display: block;
+  text-align: center;
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
