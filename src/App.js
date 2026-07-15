@@ -27,6 +27,7 @@ import NewsPage from './pages/News/NewsPage';
 import NewsDettaglioPage from './pages/News/NewsDettaglioPage';
 import LoginPage from './pages/Login/LoginPage';
 import AdminPage from './pages/Admin/AdminPage';
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 
 const ComingSoon = ({ titolo }) => (
   <div style={{ padding: '60px 20px', maxWidth: '800px', margin: '0 auto' }}>
@@ -39,6 +40,7 @@ function App() {
   return (
     
     <Router>
+        <ScrollToTop />
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
