@@ -132,7 +132,7 @@ const NewsDettaglioPage = () => {
 
           <div className="sidebar__box sidebar__box--cta">
             <h4>Hai bisogno di aiuto?</h4>
-            <p>Contatta la sede UIPA di Caserta per assistenza gratuita.</p>
+            <p>Contatta la sede UIPA di Roma per assistenza gratuita.</p>
             <a href="tel:0823320088" className="sidebar__tel">0823 320088</a>
           </div>
         </aside>

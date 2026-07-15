@@ -105,7 +105,7 @@ const CcnlPage = () => {
       <div className="ccnl__banner">
         <div>
           <h3>Non trovi il contratto che cerchi?</h3>
-          <p>Contatta la sede di Caserta per ricevere assistenza sulla contrattazione collettiva.</p>
+          <p>Contatta la sede di Roma per ricevere assistenza sulla contrattazione collettiva.</p>
         </div>
         <div className="ccnl__banner-contacts">
           <a href="tel:0823320088">Tel: 0823 320088</a>

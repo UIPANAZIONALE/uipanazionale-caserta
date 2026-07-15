@@ -75,7 +75,7 @@ const TesseramentoPage = () => {
           <div className="tesseramento__contatto">
             <h4>Preferisci parlare con noi?</h4>
             <a href="tel:0823320088" className="tesseramento__tel">📞 0823 320088</a>
-            <a href="mailto:info@uipa.it" className="tesseramento__email">✉️ info@uipa.it</a>
+            <a  href="mailto:uipanazionale@gmail.com">uipanazionale@gmail.com</a>
           </div>
         </div>
 

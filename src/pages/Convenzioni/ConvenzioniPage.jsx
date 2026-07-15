@@ -83,13 +83,13 @@ const ConvenzioniPage = () => (
       <div className="convenzioni__banner-testo">
         <h3>Hai bisogno di assistenza?</h3>
         <p>
-          Contatta la sede di Caserta per informazioni sulle convenzioni attive
+          Contatta la sede di Roma per informazioni sulle convenzioni attive
           e su come accedere ai servizi.
         </p>
       </div>
       <div className="convenzioni__banner-contacts">
         <a href="tel:0823320088">Tel: 0823 320088</a>
-        <a href="mailto:info@uipa.it">info@uipa.it</a>
+        <a  href="mailto:uipanazionale@gmail.com">uipanazionale@gmail.com</a>
       </div>
     </div>
 
