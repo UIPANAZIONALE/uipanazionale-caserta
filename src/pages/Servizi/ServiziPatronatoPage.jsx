@@ -28,7 +28,7 @@ const DettaglioServizio = ({ categoriaId, servizioId }) => {
       </div>
       <div className="dettaglio__cta">
         <h3>Hai bisogno di assistenza per questa pratica?</h3>
-        <p>Il patronato UIPA offre assistenza completamente gratuita.</p>
+        <p>Il Sindacato UIPA offre assistenza completamente gratuita.</p>
         <Link to="/contatti" className="patronato__btn">Contattaci</Link>
       </div>
     </PageTemplate>
@@ -78,7 +78,7 @@ const ServiziPatronatoPage = () => {
       <div className="patronato__intro">
         <div className="patronato__intro-testo">
           <p>
-            Il Patronato UIPA offre assistenza gratuita a tutti i cittadini per
+            Il Sindacato UIPA offre assistenza gratuita a tutti i cittadini per
             la tutela dei diritti previdenziali, assistenziali e assicurativi.
             I nostri operatori ti seguono in ogni fase della pratica.
           </p>
