@@ -68,14 +68,26 @@ const CookiePolicyPage = () => {
               </div>
               <div className="privacy__table-row">
                 <div>uipa_token</div>
+                <div className="privacy__table-row">
+                <div>_ga</div>
+                <div>Analitico</div>
+                <div>2 anni</div>
+                <div>Google Analytics - distingue gli utenti</div>
+              </div>
+              <div className="privacy__table-row">
+                <div>_ga_39EM6MQDPR</div>
+                <div>Analitico</div>
+                <div>2 anni</div>
+                <div>Google Analytics - mantiene lo stato della sessione</div>
+              </div>
                 <div>Tecnico</div>
                 <div>Sessione</div>
                 <div>Autenticazione area admin</div>
               </div>
             </div>
-            <p style={{ marginTop: '16px', color: '#666', fontSize: '0.88rem' }}>
-              ✅ Il sito <strong>non utilizza</strong> cookie di profilazione o marketing.
-            </p>
+                <p style={{ marginTop: '16px', color: '#666', fontSize: '0.88rem' }}>
+        ℹ️ I cookie analitici vengono attivati <strong>solo con il consenso</strong> dell'utente.
+      </p>
           </section>
 
           <section id="terze-parti" className="privacy__sezione">
@@ -93,6 +105,11 @@ const CookiePolicyPage = () => {
               </div>
               <div className="privacy__table-row">
                 <div>Google Fonts</div>
+                <div className="privacy__table-row">
+  <div>Google Analytics</div>
+  <div>Statistiche visite e comportamento utenti</div>
+  <div><a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Leggi</a></div>
+</div>
                 <div>Caratteri tipografici</div>
                 <div><a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Leggi</a></div>
               </div>
