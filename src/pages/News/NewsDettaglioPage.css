@@ -462,20 +462,19 @@
     gap: 8px;
   }
 }
-
 .sidebar__unicaf {
-  background: linear-gradient(135deg, #0a1628, #1a3a5c) !important;
+  background: linear-gradient(135deg, #1a2266, #2b3990) !important;
   border: none !important;
 }
 
 .sidebar__unicaf h4 {
-  color: #34d399 !important;
-  border-bottom-color: #34d399 !important;
+  color: #f0a500 !important;
+  border-bottom-color: #f0a500 !important;
 }
 
 .sidebar__unicaf-sub {
-  color: rgba(255,255,255,0.6) !important;
-  font-size: 0.75rem;
+  color: #fff !important;
+  font-size: 0.95rem;
   margin-bottom: 12px;
 }
 
@@ -491,7 +490,7 @@
 
 .sidebar__unicaf-testo {
   color: #fff;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 600;
   animation: slideIn 0.4s ease;
 }
@@ -503,20 +502,20 @@
 
 .sidebar__unicaf-btn {
   display: block;
-  background: #34d399;
-  color: #0a1628 !important;
+  background: #f0a500;
+  color: #fff !important;
   text-align: center;
-  padding: 9px;
+  padding: 12px;
   border-radius: 4px;
   font-weight: 800;
-  font-size: 0.82rem;
+  font-size: 1rem;
   text-decoration: none !important;
   margin-bottom: 8px;
   transition: background 0.2s;
 }
 
 .sidebar__unicaf-btn:hover {
-  background: #10b981;
+  background: #c07800;
 }
 
 .sidebar__unicaf-convenzione {

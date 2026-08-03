@@ -13,29 +13,44 @@ const BoxUnicaf = ({ layout = 'sidebar' }) => {
     return () => clearInterval(interval);
   }, []);
 
-  return (
-    <div className={`box-unicaf box-unicaf--${layout}`}>
+return (
+  <div className={`box-unicaf box-unicaf--${layout}`}>
+    {layout === 'banner-home' ? (
+      <div className="box-unicaf__inner">
+        <div className="box-unicaf__banner-testo">
+          <span className="box-unicaf__badge">✦ CAF Autorizzato MEF</span>
+          <h3 className="box-unicaf__banner-titolo">Pratiche fiscali online, senza code</h3>
+          <p className="box-unicaf__banner-desc">
+            ISEE, 730, Patronato, Successioni — tutto online in 24 ore. Oltre 10.000 pratiche gestite.
+          </p>
+        </div>
+        <div className="box-unicaf__banner-centro">
+          <div className="box-unicaf__servizio">
+            <span key={current} className="box-unicaf__testo">✦ {serviziUnicaf[current]}</span>
+          </div>
+        </div>
+        <div className="box-unicaf__banner-destra">
+          <a href="https://unicafsrl.it" target="_blank" rel="noopener noreferrer" className="box-unicaf__btn">
+            Scopri UNICAF →
+          </a>
+          <span className="box-unicaf__convenzione">servizio in convenzione</span>
+        </div>
+      </div>
+    ) : (
       <div className="box-unicaf__inner">
         <h4 className="box-unicaf__titolo">UNICAF</h4>
-        <p className="box-unicaf__sub">Assistenza Fiscale-Previdenziale e Tributaria</p>
-        <p className="box-unicaf__sub">Inoltra le tue pratiche in totale autonomia 100% online </p>
+        <p className="box-unicaf__sub">Assistenza fiscale 100% online</p>
         <div className="box-unicaf__servizio">
-          <span key={current} className="box-unicaf__testo">
-            ✦ {serviziUnicaf[current]}
-          </span>
+          <span key={current} className="box-unicaf__testo">✦ {serviziUnicaf[current]}</span>
         </div>
-        <a
-          href="https://unicafsrl.it"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="box-unicaf__btn"
-        >
+        <a href="https://unicafsrl.it" target="_blank" rel="noopener noreferrer" className="box-unicaf__btn">
           Scopri →
         </a>
         <span className="box-unicaf__convenzione">servizio in convenzione</span>
       </div>
-    </div>
-  );
+    )}
+  </div>
+);
 };
 
 export default BoxUnicaf;

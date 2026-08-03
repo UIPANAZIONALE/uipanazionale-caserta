@@ -45,7 +45,7 @@ const PrivacyPolicyPage = () => {
               <p><strong>UIPA – Unione Italiana Professionalita in Agricoltura</strong></p>
               <p>Sede legale: Via Sicilia – 00187 Roma</p>
               <p>Sede operativa: Via Arena 37, 81100 Caserta</p>
-              <p>Email: <a href="mailto:info@uipa.it">info@uipa.it</a></p>
+              <p>Email:  <a href="mailto:uipanazionale@gmail.com">uipanazionale@gmail.com</a></p>
               <p>Telefono: <a href="tel:0823320088">0823 320088</a></p>
             </div>
           </section>
@@ -141,7 +141,7 @@ const PrivacyPolicyPage = () => {
               </div>
             </div>
             <p style={{ marginTop: '16px' }}>
-              Per esercitare questi diritti, contattare: <a href="mailto:info@uipa.it">info@uipa.it</a>. 
+              Per esercitare questi diritti, contattare:  <a href="mailto:uipanazionale@gmail.com">uipanazionale@gmail.com</a>. 
               E possibile inoltre proporre reclamo al Garante per la Protezione dei Dati Personali 
               (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener noreferrer">www.garanteprivacy.it</a>).
             </p>
@@ -169,7 +169,7 @@ const PrivacyPolicyPage = () => {
             <h2>9. Contatti</h2>
             <div className="privacy__box">
               <p>Per qualsiasi informazione sul trattamento dei dati personali:</p>
-              <p>Email: <a href="mailto:info@uipa.it">info@uipa.it</a></p>
+              <p>Email:  <a href="mailto:uipanazionale@gmail.com">uipanazionale@gmail.com</a></p>
               <p>Telefono: <a href="tel:0823320088">0823 320088</a></p>
               <p>Indirizzo: Via Arena 37, 81100 Caserta</p>
             </div>

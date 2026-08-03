@@ -1,15 +1,9 @@
 .box-unicaf {
-  background: linear-gradient(135deg, #0a1628, #1a3a5c);
+  background: linear-gradient(135deg, #1a2266, #2b3990);
   border-radius: 8px;
   overflow: hidden;
 }
 
-/* Sidebar - piccolo */
-.box-unicaf--sidebar {
-  width: 100%;
-}
-
-/* Banner - largo in fondo */
 .box-unicaf--banner {
   margin-top: 40px;
   width: 100%;
@@ -42,13 +36,13 @@
 }
 
 .box-unicaf__titolo {
-  color: #34d399;
+  color: #f0a500;
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 0;
   padding-bottom: 8px;
-  border-bottom: 2px solid #34d399;
+  border-bottom: 2px solid #f0a500;
 }
 
 .box-unicaf__sub {
@@ -80,8 +74,8 @@
 
 .box-unicaf__btn {
   display: block;
-  background: #34d399;
-  color: #0a1628;
+  background: #f0a500;
+  color: #fff;
   text-align: center;
   padding: 9px;
   border-radius: 4px;
@@ -93,8 +87,8 @@
 }
 
 .box-unicaf__btn:hover {
-  background: #10b981;
-  color: #0a1628;
+  background: #c07800;
+  color: #fff;
 }
 
 .box-unicaf__convenzione {
@@ -108,6 +102,127 @@
 
 @media (max-width: 700px) {
   .box-unicaf--banner .box-unicaf__inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+.box-unicaf--banner-home {
+  background: linear-gradient(135deg, #1a2266 0%, #2b3990 60%, #f0a500 100%);
+  margin-top: 40px;
+  width: 100%;
+}
+
+.box-unicaf--banner-home .box-unicaf__inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px 32px;
+  flex-wrap: wrap;
+}
+
+.box-unicaf--banner-home .box-unicaf__titolo {
+  color: #fff;
+  border-bottom-color: rgba(255,255,255,0.4);
+  font-size: 1.2rem;
+}
+
+.box-unicaf--banner-home .box-unicaf__sub {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.88rem;
+}
+
+.box-unicaf--banner-home .box-unicaf__servizio {
+  background: rgba(255,255,255,0.15);
+  min-width: 200px;
+}
+
+.box-unicaf--banner-home .box-unicaf__testo {
+  color: #fff;
+}
+
+.box-unicaf--banner-home .box-unicaf__btn {
+  background: #fff;
+  color: #c07800;
+  padding: 12px 28px;
+  font-size: 0.9rem;
+}
+
+.box-unicaf--banner-home .box-unicaf__btn:hover {
+  background: #1a2266;
+  color: #fff;
+}
+
+.box-unicaf--banner-home .box-unicaf__convenzione {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  color: rgba(255,255,255,0.5);
+  width: auto; /* sovrascrive il width:100% che avevi prima */
+}
+
+.box-unicaf--banner-home .box-unicaf__inner {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr auto;
+  align-items: center;
+  gap: 24px;
+  padding: 28px 32px;
+}
+
+.box-unicaf__badge {
+  display: inline-block;
+  background: rgba(240,165,0,0.25);
+  color: #f0a500;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(240,165,0,0.4);
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.box-unicaf__banner-titolo {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.box-unicaf__banner-desc {
+  color: rgba(255,255,255,0.8);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.box-unicaf__banner-destra {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.box-unicaf--banner-home .box-unicaf__btn {
+  background: #f0a500;
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 0.88rem;
+  white-space: nowrap;
+}
+
+.box-unicaf--banner-home .box-unicaf__btn:hover {
+  background: #c07800;
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .box-unicaf--banner-home .box-unicaf__inner {
     grid-template-columns: 1fr;
   }
 }

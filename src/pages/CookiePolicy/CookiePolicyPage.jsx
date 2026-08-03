@@ -131,7 +131,7 @@ const CookiePolicyPage = () => {
             <h2>6. Contatti</h2>
             <div className="privacy__box">
               <p>Per qualsiasi informazione sui cookie:</p>
-              <p>Email: <a href="mailto:info@uipa.it">info@uipa.it</a></p>
+              <p>Email:  <a href="mailto:uipanazionale@gmail.com">uipanazionale@gmail.com</a></p>
               <p>Telefono: <a href="tel:0823320088">0823 320088</a></p>
             </div>
           </section>

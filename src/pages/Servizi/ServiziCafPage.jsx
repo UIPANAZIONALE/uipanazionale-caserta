@@ -99,7 +99,7 @@ const ServiziCafPage = () => {
           <a href="mailto:info@uipa.it">info@uipa.it</a>
         </div>
       </div>
-      <BoxUnicaf layout="banner" />
+      <BoxUnicaf layout="banner-home" />
     </PageTemplate>
   );
 };

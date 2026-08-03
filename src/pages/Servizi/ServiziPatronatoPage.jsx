@@ -19,6 +19,7 @@ const DettaglioServizio = ({ categoriaId, servizioId }) => {
         <Link to={`/servizi/patronato/${categoriaId}`}>← Torna a {categoria.titolo}</Link>
       </div>
       <div className="dettaglio__contenuto">
+        <BoxUnicaf layout="banner-home" />
         {servizio.sezioni.map((sezione, idx) => (
           <div key={idx} className="dettaglio__sezione">
             <h3>{sezione.titolo}</h3>
@@ -110,7 +111,7 @@ const ServiziPatronatoPage = () => {
           </Link>
         ))}
       </div>
-        <BoxUnicaf layout="banner" />
+        <BoxUnicaf layout="banner-home" />
     </PageTemplate>
   );
 };
